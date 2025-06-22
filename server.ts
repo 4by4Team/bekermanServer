@@ -1,36 +1,25 @@
-import 'reflect-metadata';
-import express from 'express';
+import dotenv from 'dotenv'
+dotenv.config()
+import app from './src/index' // הקובץ שיצרת לאפליקציה אקספרס
+import { PrismaClient } from '@prisma/client'
+const prisma = new PrismaClient()
 
-import swaggerUi from 'swagger-ui-express';
 
-import * as dotenv from 'dotenv';
+const PORT = process.env.PORT || 3000
 
-dotenv.config();
-import { AppDataSource } from './src/config/data-source';
-import { swaggerSpec } from './src/swagger';
+async function startServer() {
+  try {
+    await prisma.$connect()
+    console.log('✅ Database connected')
 
-console.log(' Environment variables- server.ts',process.env.DB_HOST )
-
-const app = express();
-
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
-
-const PORT = process.env.PORT || 3000;
-
-app.listen(3000, () => {
-  console.log('🚀 Running at http://localhost:3000');
-  console.log('📚 Swagger at http://localhost:3000/api-docs');
-});
-
-app.use(express.json());
-
-AppDataSource.initialize()
-  .then(() => {
-    console.log('✅ Database connected');
     app.listen(PORT, () => {
-      console.log(`🚀 Server is running at http://localhost:${PORT}`);
-    });
-  })
-  .catch((err) => {
-    console.error('❌ Error during DB initialization:', err);
-  });
+      console.log(`🚀 Server is running at http://localhost:${PORT}`)
+      console.log(`📚 Swagger at http://localhost:${PORT}/api-docs`)
+    })
+  } catch (error) {
+    console.error('❌ Error connecting to database:', error)
+    process.exit(1)
+  }
+}
+
+startServer()
