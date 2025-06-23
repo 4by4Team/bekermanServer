@@ -1,6 +1,6 @@
-export interface CreateCategoryDTO {
+export interface categoryDTO {
     categoryName: string;
-    createdBy: string;
-    updatedBy: string;
+    createdBy: Date;
+    updatedBy: Date;
   }
   

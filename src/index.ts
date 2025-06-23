@@ -1,15 +1,30 @@
 import express from 'express'
 import swaggerUi from 'swagger-ui-express'
-import { swaggerSpec } from './swagger'
+import { setupSwagger } from './swagger'
+import categoryRoutes from './routes/category.routes'
+import articleRoutes from './routes/article.routes';
+
+import { errorHandler } from './middlewares/errorHandler'
+import swaggerJSDoc from 'swagger-jsdoc';
+import swaggerOptions from './config/swaggerOptions';
 
 const app = express()
+const swaggerSpec = swaggerJSDoc(swaggerOptions);
 
 app.use(express.json())
 
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec))
+//routes
+app.use('/api/categories', categoryRoutes);
+app.use('/api/articles', articleRoutes);
 
-// כאן תוכלי להוסיף את הראוטים שלך, למשל:
-// import courseRoutes from './routes/course.routes'
-// app.use('/api/courses', courseRoutes)
+// Swagger
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+
+app.use((req, res) => {
+  res.status(404).json({ message: 'Endpoint not found' });
+});
+
+
+app.use(errorHandler);
 
 export default app
