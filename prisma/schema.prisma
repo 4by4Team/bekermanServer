@@ -15,15 +15,34 @@ datasource db {
 
 model Course {
   id             Int      @id @default(autoincrement())
+  title          String
+  description    String
   price          Float
   linkToCourse   String
   backgroundUrl  String
-  title          String
-  description    String
   createdAt      DateTime @default(now())
   createdBy      DateTime
   updatedAt      DateTime @updatedAt
   updatedBy      DateTime
+  students        Int        @default(0)
+  applicants      Applicant[]
+
+}
+
+model Applicant {
+  id                 Int       @id @default(autoincrement())
+  firstName          String
+  lastName           String
+  email              String    @unique
+  phone              String
+  age                String
+  medicalConditions  String?
+  goals              String
+  experience         String?
+  createdAt          DateTime  @default(now())
+  // קשר לקורס
+  courseId           Int
+  course             Course    @relation(fields: [courseId], references: [id])
 }
 
 model Category {
@@ -52,11 +71,10 @@ model Article {
 model Testimony {
   id             Int      @id @default(autoincrement())
   title          String
-  testimonyName  String
+  summary  String
   linkToYoutube  String
   createdAt      DateTime @default(now())
   createdBy      DateTime
   updatedAt      DateTime @updatedAt
   updatedBy      DateTime
 }
-
