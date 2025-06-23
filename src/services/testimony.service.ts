@@ -1,9 +1,13 @@
-import { PrismaClient, Testimony } from "@prisma/client";
-const prisma = new PrismaClient();
+import { PrismaClient } from "@prisma/client";
+import { Testimony } from "../models/testimony.model";
+import prisma from "../../prisma/client";
 
 export const createTestimony = (
-  data: Omit<Testimony, "id" | "createdAt" | "updatedAt">
-) => prisma.testimony.create({ data });
+  data: Testimony
+) =>{
+  console.log("Creating in SERCICE testimony with data:", data);
+  return prisma.testimony.create({ data });
+} 
 
 export const getAllTestimonies = () => prisma.testimony.findMany();
 
