@@ -16,7 +16,7 @@ export const createTestimony = async (req: Request, res: Response) => {
 
 export const getAllTestimonies = async (req: Request, res: Response) => {
   try {
-    console.log("Fetching all testimonies");
+    
     const testimonies: Testimony[] | null[] =
       await testimonyService.getAllTestimonies();
     res.json(testimonies);

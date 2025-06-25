@@ -22,7 +22,6 @@ export const validateBody = (schema: ZodSchema<any>) => (
   }
 
   req.body = result.data; // safe and parsed
-  console.log("MIDD req.body:", req.body);
   next();
 };
 
