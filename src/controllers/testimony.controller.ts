@@ -2,18 +2,11 @@ import { Request, Response } from "express";
 import * as testimonyService from "../services/testimony.service";
 import { Testimony } from "../models/testimony.model";
 
+
 export const createTestimony = async (req: Request, res: Response) => {
   try {
-    const { title, summary, linkToYoutube, createdBy } = req.body;
-    const testimony: Testimony = {
-      title,
-      summary,
-      linkToYoutube,
-      createdBy,
-      createdAt: new Date(),
-    };
-    console.log("Creating testimony with data:", testimony);
-    const testimonyAdded = await testimonyService.createTestimony(testimony);
+    const newTestimony: Testimony = req.body;
+    const testimonyAdded = await testimonyService.createTestimony(newTestimony);
     res.status(201).json(testimonyAdded);
   } catch (error: any) {
     res.status(500).json({ error: error.message });

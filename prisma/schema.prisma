@@ -73,8 +73,8 @@ model Testimony {
   title          String
   summary  String
   linkToYoutube  String
-  createdAt      DateTime? 
-  createdBy      String?
+  createdAt      DateTime
+  createdBy      String
   updatedAt      DateTime? 
   updatedBy      String?
 }

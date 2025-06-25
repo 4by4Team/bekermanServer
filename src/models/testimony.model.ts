@@ -1,11 +1,10 @@
 export interface Testimony {
-  id?: number;
+  id: number;
   title: string;
   summary: string;
   linkToYoutube: string;
-  createdBy?: string;
-  createdAt?: Date;
+  createdBy: string;
+  createdAt: Date;
   updatedBy?: string;
   updatedAt?: Date;
- 
 }
