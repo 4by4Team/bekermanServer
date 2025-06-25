@@ -14,7 +14,7 @@ router.post(
 );
 router.get("/", testimonyController.getAllTestimonies);
 router.get("/:id", validateIdParam, testimonyController.getTestimonyById);
-//router.put("/:id", testimonyController.updateTestimony);
+router.put("/:id", validateIdParam, testimonyController.updateTestimony);
 router.delete("/:id", validateIdParam, testimonyController.deleteTestimony);
-
+//- change testimonyController.getTestimonyById to getTestimonyById
 export default router;

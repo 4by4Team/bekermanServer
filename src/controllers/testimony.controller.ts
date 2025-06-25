@@ -17,7 +17,8 @@ export const createTestimony = async (req: Request, res: Response) => {
 export const getAllTestimonies = async (req: Request, res: Response) => {
   try {
     console.log("Fetching all testimonies");
-    const testimonies: Testimony[] = await testimonyService.getAllTestimonies();
+    const testimonies: Testimony[] | null[] =
+      await testimonyService.getAllTestimonies();
     res.json(testimonies);
   } catch (error: any) {
     res.status(500).json({ error: error.message });
@@ -26,7 +27,9 @@ export const getAllTestimonies = async (req: Request, res: Response) => {
 export const getTestimonyById = async (req: Request, res: Response) => {
   try {
     const id = Number(req.params.id);
-    const testimony: Testimony = await testimonyService.getTestimonyById(id);
+    const testimony: Testimony | null = await testimonyService.getTestimonyById(
+      id
+    );
     if (!testimony) {
       res.status(404).json({ error: "Testimony not found" });
       return;
@@ -40,7 +43,7 @@ export const getTestimonyById = async (req: Request, res: Response) => {
 export const updateTestimony = async (req: Request, res: Response) => {
   try {
     const id = Number(req.params.id);
-    const testimony: Testimony = await testimonyService.updateTestimony(
+    const testimony: Testimony | null = await testimonyService.updateTestimony(
       id,
       req.body
     );
@@ -57,7 +60,7 @@ export const updateTestimony = async (req: Request, res: Response) => {
 export const deleteTestimony = async (req: Request, res: Response) => {
   try {
     const id = Number(req.params.id);
-    const existingTestimony: Testimony =
+    const existingTestimony: Testimony | null =
       await testimonyService.getTestimonyById(id);
     if (!existingTestimony) {
       res.status(404).json({ error: "Testimony for remove not found" });
