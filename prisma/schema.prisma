@@ -72,7 +72,7 @@ model Testimony {
   id             Int      @id @default(autoincrement())
   title          String
   summary  String
-  linkToYoutube  String
+  youtubeId  String
   createdAt      DateTime
   createdBy      String
   updatedAt      DateTime? 

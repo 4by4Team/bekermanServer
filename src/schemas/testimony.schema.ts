@@ -7,7 +7,7 @@ import { z } from "zod";
 export const createTestimonySchema = z.object({
   title: z.string().min(1, "Title is required"),
   summary: z.string().min(1, "Summary is required"),
-  linkToYoutube: z.string().url("Must be a valid URL"),
+  youtubeId: z.string().url("Must be a valid URL"),
   createdBy: z.string().min(1, "Creator is required"),
 });
 
@@ -15,7 +15,7 @@ export const createTestimonySchema = z.object({
 export const updateTestimonySchema = z.object({
   title: z.string().min(1, "Title is required").optional(),
   summary: z.string().min(1, "Summary is required").optional(),
-  linkToYoutube: z.string().url("Must be a valid URL").optional(),
+  youtubeId: z.string().url("Must be a valid URL").optional(),
   updatedBy: z.string().min(1, "Creator is required").optional(),
   // createdBy is often not updatable – omit if needed
 });
