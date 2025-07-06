@@ -1,0 +1,64 @@
+import { Request, Response, NextFunction } from 'express';
+import * as articleService from '../services/article.service';
+import { articleSchema } from '../schemas/article.schema';
+
+export const getAll = async (req: Request, res: Response) => {
+  const articles = await articleService.getAll();
+  res.json(articles);
+};
+
+export const getByCategory = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const categoryId = parseInt(req.params.categoryId);
+    const articles = await articleService.getByCategory(categoryId);
+    res.json(articles);
+  } catch (err) {
+    next(err);
+  }
+};
+
+// export const create = async (req: Request, res: Response, next: NextFunction) => {
+//   const parsed = articleSchema.safeParse(req.body);
+//   if (!parsed.success) return res.status(400).json(parsed.error);
+//   try {
+//     const article = await articleService.create(parsed.data);
+//     res.status(201).json(article);
+//   } catch (err) {
+//     next(err);
+//   }
+// };
+
+export const create = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    const parsed = articleSchema.safeParse(req.body);
+      if (!parsed.success) {
+        res.status(400).json(parsed.error);
+        return;
+      }
+    try {
+
+        const article = await articleService.create(parsed.data);
+        res.status(201).json(article);
+
+    } catch (error) {
+
+        next(error);}
+    }
+export const update = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const id = parseInt(req.params.id);
+    const article = await articleService.update(id, req.body);
+    res.json(article);
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const remove = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const id = parseInt(req.params.id);
+    await articleService.remove(id);
+    res.status(204).send();
+  } catch (err) {
+    next(err);
+  }
+};
