@@ -1,4 +1,4 @@
-export interface articleDTO {
+export interface article {
     title: string;
     backgroundUrl: string;
     content: string;

@@ -1,5 +1,5 @@
 import { prisma } from '../../prisma/client'; // Adjust the import path as necessary
-import { categoryDTO } from '../dtos/category.dto';
+import { category } from '../dtos/category.dto';
 
 export const getAll = () => {
   return prisma.category.findMany({ include: { articles: true } });
@@ -9,11 +9,11 @@ export const getById = (id: number) => {
   return prisma.category.findUnique({ where: { id }, include: { articles: true } });
 };
 
-export const create = (data: categoryDTO) => {
+export const create = (data: category) => {
   return prisma.category.create({ data });
 };
 
-export const update = (id: number, data: Partial<categoryDTO>) => {
+export const update = (id: number, data: Partial<category>) => {
   return prisma.category.update({ where: { id }, data });
 };
 

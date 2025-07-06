@@ -1,6 +1,5 @@
 import express from 'express'
 import swaggerUi from 'swagger-ui-express'
-import { setupSwagger } from './swagger'
 import categoryRoutes from './routes/category.routes'
 import articleRoutes from './routes/article.routes';
 
