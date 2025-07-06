@@ -9,7 +9,7 @@ generator client {
 }
 
 datasource db {
-  provider = "mysql"
+  provider = "sqlserver"
   url      = env("DATABASE_URL")
 }
 
@@ -72,9 +72,9 @@ model Testimony {
   id             Int      @id @default(autoincrement())
   title          String
   summary  String
-  linkToYoutube  String
-  createdAt      DateTime @default(now())
-  createdBy      DateTime
-  updatedAt      DateTime @updatedAt
-  updatedBy      DateTime
+  youtubeId  String
+  createdAt      DateTime
+  createdBy      String
+  updatedAt      DateTime? 
+  updatedBy      String?
 }
