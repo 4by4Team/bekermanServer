@@ -1,5 +1,5 @@
 import { prisma } from '../../prisma/client'; // Adjust the import path as necessary
-import { category } from '../dtos/category.dto';
+import { category } from '../models/category.model';
 
 export const getAll = () => {
   return prisma.category.findMany({ include: { articles: true } });

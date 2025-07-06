@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import * as articleService from '../services/article.service';
 import { articleSchema } from '../schemas/article.schema';
+import { article } from '../models/article.model';
 
 export const getAll = async (req: Request, res: Response) => {
   const articles = await articleService.getAll();
@@ -29,19 +30,19 @@ export const getByCategory = async (req: Request, res: Response, next: NextFunct
 // };
 
 export const create = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const parsed = articleSchema.safeParse(req.body);
-      if (!parsed.success) {
-        res.status(400).json(parsed.error);
-        return;
-      }
+   
     try {
-
-        const article = await articleService.create(parsed.data);
+const newArticle:article = req.body;
+        const article = await articleService.create(newArticle);
         res.status(201).json(article);
 
     } catch (error) {
-
-        next(error);}
+if (error instanceof Error) {
+  res.status(500).json({ message: 'Error creating article', error: error.message });
+} else {
+  res.status(500).json({ message: 'Error creating article', error: 'Unknown error' });
+}
+      }
     }
 export const update = async (req: Request, res: Response, next: NextFunction) => {
   try {

@@ -1,5 +1,5 @@
 import { prisma } from '../../prisma/client';
-import { article } from '../dtos/article.dto';
+import { article } from '../models/article.model';
 
 export const getAll = () => {
   return prisma.article.findMany({ include: { category: true } });

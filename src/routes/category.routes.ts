@@ -1,5 +1,8 @@
 import { Router } from 'express';
-import * as controller from '../controllers/category.controller';
+import * as categoryController from '../controllers/category.controller';
+import { validateIdParam } from '../middlewares/validateIdParam.middleware';
+import validateBody from '../middlewares/validateBody.middeleware';
+import { categorySchema } from '../schemas/category.schema';
 
 const router = Router();
 
@@ -14,7 +17,7 @@ const router = Router();
  *       200:
  *         description: List of categories
  */
-router.get('/', controller.getAll);
+router.get('/', categoryController.getAll);
 
 /**
  * @openapi
@@ -35,7 +38,7 @@ router.get('/', controller.getAll);
  *       404:
  *         description: Category not found
  */
-router.get('/:id', controller.getById);
+router.get('/:id',validateIdParam, categoryController.getById);
 
 /**
  * @openapi
@@ -67,7 +70,9 @@ router.get('/:id', controller.getById);
  *       201:
  *         description: Category created
  */
-router.post('/', controller.create);
+router.post('/',
+    validateBody(categorySchema),
+     categoryController.create);
 
 /**
  * @openapi
@@ -98,7 +103,7 @@ router.post('/', controller.create);
  *       200:
  *         description: Category updated
  */
-router.put('/:id', controller.update);
+router.put('/:id',validateIdParam, categoryController.update);
 
 /**
  * @openapi
@@ -117,6 +122,6 @@ router.put('/:id', controller.update);
  *       204:
  *         description: Category deleted
  */
-router.delete('/:id', controller.remove);
+router.delete('/:id',validateIdParam, categoryController.remove);
 
 export default router;

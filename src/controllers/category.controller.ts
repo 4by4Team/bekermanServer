@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import * as categoryService from '../services/category.service';
 import { categorySchema } from '../schemas/category.schema';
+import { category } from '../models/category.model';
 
 export const getAll = async (req: Request,res: Response,next: NextFunction): Promise<void> => {
     try {
@@ -39,17 +40,18 @@ export const getById = async (req: Request, res: Response, next: NextFunction): 
 // };
 
 export const create = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const parsed = categorySchema.safeParse(req.body);
-      if (!parsed.success) {
-        res.status(400).json(parsed.error);
-        return;
-      }
+   
     try {
-        const category = await categoryService.create(parsed.data);
+        const newCategory:category = req.body;
+        const category = await categoryService.create(newCategory);
             res.status(201).json(category);
 
     } catch (error) {
-    next(error);
+        if (error instanceof Error) {
+          res.status(500).json({ message: 'Error creating category', error: error.message });
+        } else {
+          res.status(500).json({ message: 'Error creating category', error: 'Unknown error' });
+        }
     }
 }
 

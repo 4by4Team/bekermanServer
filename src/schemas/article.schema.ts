@@ -1,10 +1,9 @@
 import { z } from 'zod';
 
 export const articleSchema = z.object({
-  title: z.string().min(2),
+  title: z.string().min(2,"Title is required"),
   backgroundUrl: z.string().url(),
   content: z.string().min(5),
   categoryId: z.number(),
-  createdBy: z.string().transform((v) => new Date(v)),
-  updatedBy: z.string().transform((v) => new Date(v)),
+  createdBy: z.string().min(1, "Creator is required"),
 });

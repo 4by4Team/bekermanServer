@@ -1,5 +1,8 @@
 import { Router } from 'express';
-import * as controller from '../controllers/article.controller';
+import * as articleController from '../controllers/article.controller';
+import { validateIdParam } from '../middlewares/validateIdParam.middleware';
+import validateBody from '../middlewares/validateBody.middeleware';
+import { articleSchema } from '../schemas/article.schema';
 
 const router = Router();
 
@@ -14,7 +17,7 @@ const router = Router();
  *       200:
  *         description: List of articles
  */
-router.get('/', controller.getAll);
+router.get('/', articleController.getAll);
 
 /**
  * @openapi
@@ -35,7 +38,7 @@ router.get('/', controller.getAll);
  *       404:
  *         description: Category not found
  */
-router.get('/by-category/:categoryId', controller.getByCategory);
+router.get('/by-category/:categoryId', articleController.getByCategory);
 
 /**
  * @openapi
@@ -76,7 +79,9 @@ router.get('/by-category/:categoryId', controller.getByCategory);
  *       201:
  *         description: Article created
  */
-router.post('/', controller.create);
+router.post('/', 
+    validateBody(articleSchema),
+    articleController.create);
 
 /**
  * @openapi
@@ -113,7 +118,9 @@ router.post('/', controller.create);
  *       200:
  *         description: Article updated
  */
-router.put('/:id', controller.update);
+router.put('/:id',validateIdParam,
+    validateBody(articleSchema),
+     articleController.update);
 
 /**
  * @openapi
@@ -132,6 +139,6 @@ router.put('/:id', controller.update);
  *       204:
  *         description: Article deleted
  */
-router.delete('/:id', controller.remove);
+router.delete('/:id',validateIdParam, articleController.remove);
 
 export default router;
