@@ -10,8 +10,14 @@ export const getByCategory = (categoryId: number) => {
 };
 
 export const create = (data: article) => {
-  return prisma.article.create({ data });
+  return prisma.article.create({ data:{
+    ...data,
+    createdAt: new Date(),}
+
+  });
 };
+
+
 
 export const update = (id: number, data: Partial<article>) => {
   return prisma.article.update({ where: { id }, data });

@@ -3,7 +3,9 @@ export interface article {
     backgroundUrl: string;
     content: string;
     categoryId: number;
-    createdBy: Date;
-    updatedBy: Date;
+    createdBy: string;
+    updatedBy?: string;
+    createdAt: Date;
+    updatedAt?: Date;
   }
   

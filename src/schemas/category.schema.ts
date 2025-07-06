@@ -1,7 +1,10 @@
+
 import { z } from 'zod';
 
 export const categorySchema = z.object({
-  categoryName: z.string().min(2),
+  categoryName: z.string().min(2, "Category name is required"),
   createdBy: z.string().min(1, "Creator is required"),
-  
+  updatedBy: z.string().optional(), // שדה אופציונלי
+  createdAt: z.date().optional(),  // שדה אופציונלי
+  updatedAt: z.date().optional(),  // שדה אופציונלי
 });
