@@ -1,7 +1,6 @@
 import { Testimony } from "../models/testimony.model";
 import {prisma} from "../../prisma/client";
 
-
 export const createTestimony = (data: Omit<Testimony, "createdAt">) => {
   return prisma.testimony.create({
     data: {
