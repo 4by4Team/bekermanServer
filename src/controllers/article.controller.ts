@@ -3,6 +3,8 @@ import * as articleService from '../services/article.service';
 import { articleSchema } from '../schemas/article.schema';
 
 export const getAll = async (req: Request, res: Response) => {
+
+  console.log("getAll- categories controllers");
   const articles = await articleService.getAll();
   res.json(articles);
 };
