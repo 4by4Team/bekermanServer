@@ -4,6 +4,8 @@ import { articleSchema } from '../schemas/article.schema';
 import { article } from '../models/article.model';
 
 export const getAll = async (req: Request, res: Response) => {
+
+  console.log("getAll- categories controllers");
   const articles = await articleService.getAll();
   res.json(articles);
 };
