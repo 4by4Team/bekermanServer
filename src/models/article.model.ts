@@ -4,8 +4,8 @@ export interface article {
     content: string;
     categoryId: number;
     createdBy: string;
-    updatedBy?: string;
     createdAt: Date;
-    updatedAt?: Date;
+    updatedBy?: string | null;
+    updatedAt?: Date | null ;
   }
   
