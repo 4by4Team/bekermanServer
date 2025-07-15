@@ -1,9 +1,19 @@
-import { Router } from 'express'
-import { getAllCourses, createCourse } from '../controllers/course.controller'
+import { Router } from 'express';
+import * as courseController from '../controllers/course.controller';
+import { validateIdParam } from '../middlewares/validateIdParam.middleware';
+import validateBody from '../middlewares/validateBody.middeleware';
+import { courseSchema } from '../schemas/course.schema';
 
-const router = Router()
+const router = Router();
 
-router.get('/', getAllCourses)
-router.post('/', createCourse)
+router.get('/', courseController.getAllCourses);
 
-export default router
+router.get('/:id', validateIdParam, courseController.getCourseById);
+
+router.post('/', validateBody(courseSchema), courseController.createCourse);
+
+router.put('/:id', validateIdParam, validateBody(courseSchema), courseController.updateCourse);
+
+router.delete('/:id', validateIdParam, courseController.deleteCourse);
+
+export default router;
