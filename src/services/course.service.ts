@@ -10,11 +10,13 @@ export const getCourseById = (id: number) => {
 };
 
 export const createCourse = (data: Course) => {
-    return prisma.course.create({ data });
+    const { applicants, ...courseData } = data;
+    return prisma.course.create({ data: courseData });
 };
 
 export const updateCourse = (id: number, data: Partial<Course>) => {
-    return prisma.course.update({ where: { id }, data });
+    const { id: _, applicants, ...updateData } = data;
+    return prisma.course.update({ where: { id }, data: updateData });
 };
 
 export const deleteCourse = (id: number) => {
