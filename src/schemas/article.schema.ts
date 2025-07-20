@@ -6,4 +6,5 @@ export const articleSchema = z.object({
   content: z.string().min(5),
   categoryId: z.number(),
   createdBy: z.string().min(1, "Creator is required"),
+  readTime: z.number().min(1, "Read time is required"),
 });
