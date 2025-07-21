@@ -1,4 +1,5 @@
 export interface category {
+
   id:number;
     categoryName: string;
     createdBy: Date;
@@ -6,3 +7,4 @@ export interface category {
     createdAt: Date;
 updatedAt?: Date; }
   
+

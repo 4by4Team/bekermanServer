@@ -1,3 +1,4 @@
+
 import { Request, Response, NextFunction } from "express";
 import * as articleService from "../services/article.service";
 import { articleSchema } from "../schemas/article.schema";
@@ -29,6 +30,7 @@ export const create = async (
   res: Response,
   next: NextFunction
 ): Promise<void> => {
+
   try {
     const newArticle: article = req.body;
     console.log("newArticle- categories controllers", newArticle);
