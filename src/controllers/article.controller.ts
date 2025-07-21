@@ -24,6 +24,13 @@ export const getByCategory = async (
   }
 };
 
+
+export const create = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<void> => {
+
   try {
     const newArticle: article = req.body;
     console.log("newArticle- categories controllers", newArticle);
@@ -41,15 +48,7 @@ export const getByCategory = async (
     }
   }
 };
-// export const update = async (req: Request, res: Response, next: NextFunction) => {
-//   try {
-//     const id = parseInt(req.params.id);
-//     const article = await articleService.update(id, req.body);
-//     res.json(article);
-//   } catch (err) {
-//     next(err);
-//   }
-// };
+
 
 export const remove = async (
   req: Request,
