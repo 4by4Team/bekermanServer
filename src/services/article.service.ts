@@ -2,7 +2,7 @@ import { prisma } from "../../prisma/client";
 import { article } from "../models/article.model";
 
 export const getAll = () => {
-  return prisma.article.findMany({ include: { category: true } });
+  return prisma.article.findMany();
 };
 
 export const getByCategory = (categoryId: number) => {
