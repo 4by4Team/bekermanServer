@@ -12,7 +12,6 @@ export const getAll = async (req: Request,res: Response,next: NextFunction): Pro
     }
   };
 
-  // please check if getById and creat are correct
 export const getById = async (req: Request, res: Response, next: NextFunction): Promise<void>  => {
   try {
     const id = parseInt(req.params.id);
@@ -26,18 +25,6 @@ export const getById = async (req: Request, res: Response, next: NextFunction): 
     next(err);
   }
 };
-
-
-// export const create = async (req: Request, res: Response, next: NextFunction) => {
-//   const parsed = categorySchema.safeParse(req.body);
-//   if (!parsed.success) return res.status(400).json(parsed.error);
-//   try {
-//     const category = await categoryService.create(parsed.data);
-//     res.status(201).json(category);
-//   } catch (err) {
-//     next(err);
-//   }
-// };
 
 export const create = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
    

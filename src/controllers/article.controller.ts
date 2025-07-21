@@ -1,6 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
 import * as articleService from '../services/article.service';
-import { articleSchema } from '../schemas/article.schema';
 import { article } from '../models/article.model';
 
 export const getAll = async (req: Request, res: Response) => {
@@ -17,17 +16,6 @@ export const getByCategory = async (req: Request, res: Response, next: NextFunct
     next(err);
   }
 };
-
-// export const create = async (req: Request, res: Response, next: NextFunction) => {
-//   const parsed = articleSchema.safeParse(req.body);
-//   if (!parsed.success) return res.status(400).json(parsed.error);
-//   try {
-//     const article = await articleService.create(parsed.data);
-//     res.status(201).json(article);
-//   } catch (err) {
-//     next(err);
-//   }
-// };
 
 export const create = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
    

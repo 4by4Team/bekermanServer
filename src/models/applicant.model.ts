@@ -10,6 +10,5 @@ export interface Applicant {
   experience?: string | null;
   createdAt: Date;
   courseId: number;
-  // Optionally, you can include the related Course if needed:
   // course?: Course;
 }
