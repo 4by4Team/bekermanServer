@@ -8,6 +8,7 @@ import swaggerJSDoc from 'swagger-jsdoc';
 import swaggerOptions from './config/swaggerOptions';
 import test from 'node:test';
 import testimonyRoutes from './routes/testimony.routes';
+import courseRoutes from './routes/course.routes';
 
 const app = express()
 const swaggerSpec = swaggerJSDoc(swaggerOptions);
@@ -17,6 +18,8 @@ app.use(express.json())
 //routes
 app.use('/api/categories', categoryRoutes);
 app.use('/api/articles', articleRoutes);
+app.use("/api/testimonies",testimonyRoutes);
+app.use('/api/courses', courseRoutes);
 
 // Swagger
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
@@ -27,6 +30,5 @@ app.use((req, res) => {
 
 
 app.use(errorHandler);
-app.use("/testimonies",testimonyRoutes);
 
 export default app;

@@ -9,11 +9,11 @@ export const createCourse = async (req: Request, res: Response) => {
       applicants: Array.isArray(req.body.applicants) ? req.body.applicants : [],
     };
     const courseAdded = await courseService.createCourse(newCourseData);
-    const courseWithApplicants: Course = {
-      ...courseAdded,
-      applicants: Array.isArray((courseAdded as any).applicants) ? (courseAdded as any).applicants : [],
-    };
-    res.status(201).json(courseWithApplicants);
+    // const courseWithApplicants: Course = {
+    //   ...courseAdded,
+    //   applicants: Array.isArray((courseAdded as any).applicants) ? (courseAdded as any).applicants : [],
+    // };
+    res.status(201).json(courseAdded);
   } catch (error: any) {
     res.status(500).json({ error: error.message });
   }

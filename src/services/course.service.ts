@@ -2,16 +2,19 @@ import { prisma } from '../../prisma/client';
 import { Course } from '../models/course.model';
 
 export const getAllCourses = () => {
-    return prisma.course.findMany({ include: { applicants: true } });
+    return prisma.course.findMany();
 };
 
 export const getCourseById = (id: number) => {
-    return prisma.course.findUnique({ where: { id }, include: { applicants: true } });
+    return prisma.course.findUnique({ where: { id } });
 };
 
 export const createCourse = (data: Course) => {
     const { applicants, ...courseData } = data;
-    return prisma.course.create({ data: courseData });
+    return prisma.course.create({ data: {
+      ...courseData,
+      createdAt: new Date(),
+    } });
 };
 
 export const updateCourse = (id: number, data: Partial<Course>) => {

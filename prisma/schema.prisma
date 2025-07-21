@@ -20,11 +20,11 @@ model Course {
   price          Float
   linkToCourse   String
   backgroundUrl  String
-  createdAt      DateTime @default(now())
-  createdBy      DateTime
-  updatedAt      DateTime @updatedAt
-  updatedBy      DateTime
-  students        Int        @default(0)
+  createdAt      DateTime 
+  createdBy      String
+  updatedAt      DateTime?
+  updatedBy      String?
+  students        Int    @default(0)
   applicants      Applicant[]
 
 }

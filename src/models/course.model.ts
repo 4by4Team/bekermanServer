@@ -8,9 +8,9 @@ export interface Course {
   linkToCourse: string;
   backgroundUrl: string;
   createdAt: Date;
-  createdBy: Date;
-  updatedAt: Date;
-  updatedBy: Date;
+  createdBy: string;
+  updatedAt?: Date|null;
+  updatedBy?: string|null;
   students: number;
-  applicants: Applicant[];
+  applicants?: Applicant[]|null;
 }
