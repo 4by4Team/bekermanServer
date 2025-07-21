@@ -49,10 +49,10 @@ model Category {
   id             Int       @id @default(autoincrement())
   categoryName   String
   articles       Article[]
-  createdAt      DateTime  @default(now())
-  createdBy      DateTime
-  updatedAt      DateTime  @updatedAt
-  updatedBy      DateTime
+  createdAt      DateTime
+  createdBy      String
+  updatedAt      DateTime?
+  updatedBy      String?
 }
 
 model Article {
@@ -60,12 +60,13 @@ model Article {
   title          String
   backgroundUrl  String
   content        String
+  readTime       Int
   categoryId     Int
   category       Category  @relation(fields: [categoryId], references: [id])
-  createdAt      DateTime  @default(now())
-  createdBy      DateTime
-  updatedAt      DateTime  @updatedAt
-  updatedBy      DateTime
+  createdAt      DateTime 
+  createdBy     String
+  updatedAt      DateTime?
+  updatedBy      String?
 }
 
 model Testimony {

@@ -118,9 +118,9 @@ router.post('/',
  *       200:
  *         description: Article updated
  */
-router.put('/:id',validateIdParam,
-    validateBody(articleSchema),
-     articleController.update);
+// router.put('/:id',validateIdParam,
+//     validateBody(articleSchema),
+//      articleController.update);
 
 /**
  * @openapi

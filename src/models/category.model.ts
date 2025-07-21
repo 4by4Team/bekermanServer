@@ -1,5 +1,10 @@
 export interface category {
-  categoryName: string;
-  createdBy: Date;
-  updatedBy: Date;
-}
+
+  id:number;
+    categoryName: string;
+    createdBy: Date;
+    updatedBy?: Date;
+    createdAt: Date;
+updatedAt?: Date; }
+  
+

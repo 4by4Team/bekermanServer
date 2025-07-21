@@ -10,12 +10,43 @@ export const getById = (id: number) => {
 };
 
 export const create = (data: category) => {
-  return prisma.category.create({ data });
-};
+    const {
+      id,               // אסור לשלוח כי זה autoincrement
+      createdAt,        // ניצור חדש
+      updatedAt,        // לא צריך ביצירה
+      updatedBy,        // נוסיף אם קיים
+      ...rest
+    } = data;
+  
+    return prisma.category.create({
+      data: {
+        ...rest,
+        createdAt: new Date(),
+        createdBy: String(data.createdBy), // כאן חובה לוודא שזה string
+        updatedBy: data.updatedBy ? String(data.updatedBy) : undefined,
+      },
+    });
+  };
+  
 
-export const update = (id: number, data: Partial<category>) => {
-  return prisma.category.update({ where: { id }, data });
-};
+
+
+  export const update = (id: number, data: Partial<category>) => {
+    const {
+      createdAt,
+      createdBy,
+      ...updatableFields
+    } = data;
+  
+    return prisma.category.update({
+      where: { id },
+      data: {
+        ...updatableFields,
+        updatedAt: new Date(),
+        updatedBy: data.updatedBy ? String(data.updatedBy) : undefined,
+      },
+    });
+  };
 
 export const remove = (id: number) => {
   return prisma.category.delete({ where: { id } });
