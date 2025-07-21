@@ -60,6 +60,7 @@ model Article {
   title          String
   backgroundUrl  String
   content        String
+  readTime       Int
   categoryId     Int
   category       Category  @relation(fields: [categoryId], references: [id])
   createdAt      DateTime 
