@@ -46,15 +46,7 @@ export const create = async (
     }
   }
 };
-// export const update = async (req: Request, res: Response, next: NextFunction) => {
-//   try {
-//     const id = parseInt(req.params.id);
-//     const article = await articleService.update(id, req.body);
-//     res.json(article);
-//   } catch (err) {
-//     next(err);
-//   }
-// };
+
 
 export const remove = async (
   req: Request,
