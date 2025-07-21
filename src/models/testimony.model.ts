@@ -8,11 +8,4 @@ export interface Testimony {
   updatedBy?: string | null;
   updatedAt?: Date | null;
 }
-// export interface Testimonial {
-//   id: number;
-//   category: string;
-//   title: string;
-//   quote: string;
-//   youtubeId: string;
-//   colorTheme?: 'emerald' | 'violet';
-// }
+

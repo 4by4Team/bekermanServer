@@ -1,3 +1,4 @@
+
 import { Request, Response, NextFunction } from "express";
 import * as articleService from "../services/article.service";
 import { articleSchema } from "../schemas/article.schema";
@@ -23,22 +24,6 @@ export const getByCategory = async (
   }
 };
 
-// export const create = async (req: Request, res: Response, next: NextFunction) => {
-//   const parsed = articleSchema.safeParse(req.body);
-//   if (!parsed.success) return res.status(400).json(parsed.error);
-//   try {
-//     const article = await articleService.create(parsed.data);
-//     res.status(201).json(article);
-//   } catch (err) {
-//     next(err);
-//   }
-// };
-
-export const create = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-): Promise<void> => {
   try {
     const newArticle: article = req.body;
     console.log("newArticle- categories controllers", newArticle);
