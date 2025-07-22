@@ -1,8 +1,8 @@
 
 import { Request, Response, NextFunction } from "express";
 import * as articleService from "../services/article.service";
-import { articleSchema } from "../schemas/article.schema";
 import { article } from "../models/article.model";
+import { Article } from "@prisma/client";
 
 export const getAllArticales = async (req: Request, res: Response) => {
   console.log("getAll- categories controllers");
@@ -63,11 +63,21 @@ export const deleteArtical = async (
     next(err);
   }
 };
-export const updateArtical = async (
-  req: Request, 
-  res: Response,
-  next: NextFunction
- ) => {
- 
+export const updateArtical = async (req: Request, res: Response) => {
+  try {
+    const id = Number(req.params.id);
+
+    const article: Article | null = await articleService.updateArtical(id, req.body);
+
+    if (!article) {
+      res.status(404).json({ error: "Article not found" });
+      return;
+    }
+
+    res.json(article);
+  } catch (error: any) {
+    res.status(500).json({ error: error.message });
+  }
 };
+
 
