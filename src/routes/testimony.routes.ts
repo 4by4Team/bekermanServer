@@ -1,7 +1,7 @@
 import { Router } from "express";
 import * as testimonyController from "../controllers/testimony.controller";
 
-import { createTestimonySchema } from "../schemas/testimony.schema";
+import { createTestimonySchema, updateTestimonySchema } from "../schemas/testimony.schema";
 import validateBody from "../middlewares/validateBody.middeleware";
 import { validateIdParam } from "../middlewares/validateIdParam.middleware";
 
@@ -13,8 +13,13 @@ router.post(
   testimonyController.createTestimony
 );
 router.get("/", testimonyController.getAllTestimonies);
-router.get("/:id", validateIdParam, testimonyController.getTestimonyById);
-router.put("/:id", validateIdParam, testimonyController.updateTestimony);
+router.get("/:id", validateIdParam, testimonyController.getTestimonyById)
+router.put(
+  "/:id",
+  validateIdParam,
+  validateBody(updateTestimonySchema),
+  testimonyController.updateTestimony
+);
 router.delete("/:id", validateIdParam, testimonyController.deleteTestimony);
 
 export default router;

@@ -16,6 +16,5 @@ export const updateTestimonySchema = z.object({
   title: z.string().min(1, "Title is required").optional(),
   summary: z.string().min(1, "Summary is required").optional(),
   youtubeId: z.string().url("Must be a valid URL").optional(),
-  updatedBy: z.string().min(1, "Creator is required").optional(),
-  // createdBy is often not updatable – omit if needed
+  updatedBy: z.string().min(1, "Creator is required"),
 });
