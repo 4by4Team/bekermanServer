@@ -6,6 +6,7 @@ import { createArticleSchema, updateArticleSchema } from '../schemas/article.sch
 
 const router = Router();
 router.get('/', articleController.getAllArticales);
+router.get('/:id',validateIdParam, articleController.getArticleById);
 router.get('/by-category/:categoryId', articleController.getByCategory);
 router.post('/', 
     validateBody(createArticleSchema),
