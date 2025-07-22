@@ -1,5 +1,5 @@
 import { prisma } from "../../prisma/client";
-import { article } from "../models/article.model";
+import { Article } from "../models/article.model";
 
 
 export const getAllArticales  = () => {
@@ -11,7 +11,7 @@ export const getByCategory = (categoryId: number) => {
   return prisma.article.findMany({ where: { categoryId } });
 };
 
-export const createArtical = (data: Omit<article, "createdAt">) => {
+export const createArtical = (data: Omit<Article, "createdAt">) => {
   return prisma.article.create({
     data: {
       ...data,
@@ -20,7 +20,7 @@ export const createArtical = (data: Omit<article, "createdAt">) => {
   });
 };
 
-export const updateArtical = (id: number, data: Partial<article>) => {
+export const updateArtical = (id: number, data: Partial<Article>) => {
   return prisma.article.update({
     where: { id },
     data: {

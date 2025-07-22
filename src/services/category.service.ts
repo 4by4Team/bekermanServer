@@ -1,5 +1,5 @@
-import { prisma } from "../../prisma/client"; // Adjust the import path as necessary
-import { category } from "../models/category.model";
+import { prisma } from "../../prisma/client"; 
+import { Category } from "../models/category.model";
 
 export const getAllCategory = () => {
   return prisma.category.findMany();
@@ -11,7 +11,7 @@ export const getByIdCategory = (id: number) => {
   });
 };
 
-export const createCategory = (data: category) => {
+export const createCategory = (data: Category) => {
   return prisma.category.create({
     data: {
       ...data,
@@ -20,7 +20,7 @@ export const createCategory = (data: category) => {
   });
 };
 
-  export const updateCategory = (id: number, data: Partial<category>) => {
+  export const updateCategory = (id: number, data: Partial<Category>) => {
     return prisma.category.update({
       where: { id },
       data: {

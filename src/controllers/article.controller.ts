@@ -1,7 +1,6 @@
 
 import { Request, Response, NextFunction } from "express";
 import * as articleService from "../services/article.service";
-import { article } from "../models/article.model";
 import { Article } from "@prisma/client";
 
 export const getAllArticales = async (req: Request, res: Response) => {
@@ -32,7 +31,7 @@ export const createArtical = async (
 ): Promise<void> => {
 
   try {
-    const newArticle: article = req.body;
+    const newArticle: Article = req.body;
     console.log("newArticle- categories controllers", newArticle);
     const article = await articleService.createArtical(newArticle);
     res.status(201).json(article);

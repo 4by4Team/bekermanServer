@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import * as categoryService from '../services/category.service';
-import { category } from '../models/category.model';
+import { Category } from '../models/category.model';
 
 export const getAllCategories = async (req: Request,res: Response,next: NextFunction): Promise<void> => {
     try {
@@ -28,7 +28,7 @@ export const getByIdCategory = async (req: Request, res: Response, next: NextFun
 export const createCategory = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
    
     try {
-        const newCategory:category = req.body;
+        const newCategory:Category = req.body;
         const category = await categoryService.createCategory(newCategory);
             res.status(201).json(category);
 
