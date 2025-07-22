@@ -21,7 +21,6 @@ export const createCategory = (data: category) => {
 };
 
   export const updateCategory = (id: number, data: Partial<category>) => {
-    console.log("updateCategory- categories service", data);
     return prisma.category.update({
       where: { id },
       data: {

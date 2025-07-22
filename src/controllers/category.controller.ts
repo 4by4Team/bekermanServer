@@ -43,7 +43,6 @@ export const createCategory = async (req: Request, res: Response, next: NextFunc
 
 export const updateCategory = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    console.log("updateCategory- categories controllers", req.body);
     const id = parseInt(req.params.id);
     const category = await categoryService.updateCategory(id, req.body);
     res.json(category);
