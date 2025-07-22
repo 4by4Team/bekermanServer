@@ -33,3 +33,12 @@ export const createCategory = (data: Category) => {
 export const deleteCategory = (id: number) => {
   return prisma.category.delete({ where: { id } });
 };
+export const updateCategoryCount = async (id: number, count: number) => {
+  return prisma.category.update({
+    where: { id },
+    data: {
+      count,
+      updatedAt: new Date(),
+    },
+  });
+}
