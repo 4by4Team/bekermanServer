@@ -1,7 +1,7 @@
 
 import { Request, Response, NextFunction } from "express";
 import * as articleService from "../services/article.service";
-import { Article } from "@prisma/client";
+import { Article } from "../models/article.model";
 
 export const getAllArticales = async (req: Request, res: Response) => {
   const articles = await articleService.getAllArticales();
