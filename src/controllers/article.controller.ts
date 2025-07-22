@@ -6,7 +6,7 @@ import { article } from "../models/article.model";
 
 export const getAllArticales = async (req: Request, res: Response) => {
   console.log("getAll- categories controllers");
-  const articles = await articleService.getAll();
+  const articles = await articleService.getAllArticales();
   res.json(articles);
 };
 
@@ -34,7 +34,7 @@ export const createArtical = async (
   try {
     const newArticle: article = req.body;
     console.log("newArticle- categories controllers", newArticle);
-    const article = await articleService.create(newArticle);
+    const article = await articleService.createArtical(newArticle);
     res.status(201).json(article);
   } catch (error) {
     if (error instanceof Error) {
@@ -57,7 +57,7 @@ export const deleteArtical = async (
 ) => {
   try {
     const id = parseInt(req.params.id);
-    await articleService.remove(id);
+    await articleService.deleteArtical(id);
     res.status(204).send();
   } catch (err) {
     next(err);
