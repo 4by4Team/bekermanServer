@@ -1,12 +1,12 @@
 
 import { Request, Response, NextFunction } from "express";
 import * as articleService from "../services/article.service";
-import { articleSchema } from "../schemas/article.schema";
 import { article } from "../models/article.model";
+import { Article } from "@prisma/client";
 
-export const getAll = async (req: Request, res: Response) => {
+export const getAllArticales = async (req: Request, res: Response) => {
   console.log("getAll- categories controllers");
-  const articles = await articleService.getAll();
+  const articles = await articleService.getAllArticales();
   res.json(articles);
 };
 
@@ -25,7 +25,7 @@ export const getByCategory = async (
 };
 
 
-export const create = async (
+export const createArtical = async (
   req: Request,
   res: Response,
   next: NextFunction
@@ -34,7 +34,7 @@ export const create = async (
   try {
     const newArticle: article = req.body;
     console.log("newArticle- categories controllers", newArticle);
-    const article = await articleService.create(newArticle);
+    const article = await articleService.createArtical(newArticle);
     res.status(201).json(article);
   } catch (error) {
     if (error instanceof Error) {
@@ -50,16 +50,34 @@ export const create = async (
 };
 
 
-export const remove = async (
+export const deleteArtical = async (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
   try {
     const id = parseInt(req.params.id);
-    await articleService.remove(id);
+    await articleService.deleteArtical(id);
     res.status(204).send();
   } catch (err) {
     next(err);
   }
 };
+export const updateArtical = async (req: Request, res: Response) => {
+  try {
+    const id = Number(req.params.id);
+
+    const article: Article | null = await articleService.updateArtical(id, req.body);
+
+    if (!article) {
+      res.status(404).json({ error: "Article not found" });
+      return;
+    }
+
+    res.json(article);
+  } catch (error: any) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+
