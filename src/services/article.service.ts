@@ -6,6 +6,11 @@ export const getAllArticales  = () => {
   return prisma.article.findMany();
 
 }
+export const getArticleById = (id: number) => {
+  return prisma.article.findUnique({
+    where: { id },
+  });
+};
 
 export const getByCategory = (categoryId: number) => {
   return prisma.article.findMany({ where: { categoryId } });

@@ -7,8 +7,26 @@ export const getAllArticales = async (req: Request, res: Response) => {
   const articles = await articleService.getAllArticales();
   res.json(articles);
 };
+export const getArticleById = async (req: Request, res: Response) => {
+  try {
+    const id = parseInt(req.params.id, 10);
 
-export const getByCategory = async (
+    if (isNaN(id)) {
+       res.status(400).json({ message: "Invalid article ID" });
+    }
+
+    const article = await articleService.getArticleById(id);
+
+    if (!article) {
+       res.status(404).json({ message: "Article not found" });
+    }
+
+    res.json(article);
+  } catch (error) {
+    console.error("Error fetching article by ID:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};export const getByCategory = async (
   req: Request,
   res: Response,
   next: NextFunction
