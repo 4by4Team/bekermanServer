@@ -8,6 +8,7 @@ export const validateBody = (schema: ZodSchema<any>) => (
 ) => {
   const result = schema.safeParse(req.body);
   if (!result.success) {
+    
     const flat = result.error.flatten();
 
     // Combine all error messages into a single string
