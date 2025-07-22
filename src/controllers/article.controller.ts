@@ -4,7 +4,6 @@ import * as articleService from "../services/article.service";
 import { Article } from "@prisma/client";
 
 export const getAllArticales = async (req: Request, res: Response) => {
-  console.log("getAll- categories controllers");
   const articles = await articleService.getAllArticales();
   res.json(articles);
 };
