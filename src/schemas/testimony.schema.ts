@@ -13,8 +13,8 @@ export const createTestimonySchema = z.object({
 
 // // Used for PUT (update)
 export const updateTestimonySchema = z.object({
-  title: z.string().min(1, "Title is required").optional(),
-  summary: z.string().min(1, "Summary is required").optional(),
-  youtubeId: z.string().url("Must be a valid URL").optional(),
+  title: z.string().min(1, "Title is required"),
+  summary: z.string().min(1, "Summary is required"),
+  youtubeId: z.string().url("Must be a valid URL"),
   updatedBy: z.string().min(1, "Creator is required"),
 });
