@@ -4,7 +4,7 @@ import * as articleService from "../services/article.service";
 import { articleSchema } from "../schemas/article.schema";
 import { article } from "../models/article.model";
 
-export const getAll = async (req: Request, res: Response) => {
+export const getAllArticales = async (req: Request, res: Response) => {
   console.log("getAll- categories controllers");
   const articles = await articleService.getAll();
   res.json(articles);
@@ -25,7 +25,7 @@ export const getByCategory = async (
 };
 
 
-export const create = async (
+export const createArtical = async (
   req: Request,
   res: Response,
   next: NextFunction
@@ -50,7 +50,7 @@ export const create = async (
 };
 
 
-export const remove = async (
+export const deleteArtical = async (
   req: Request,
   res: Response,
   next: NextFunction
@@ -63,3 +63,11 @@ export const remove = async (
     next(err);
   }
 };
+export const updateArtical = async (
+  req: Request, 
+  res: Response,
+  next: NextFunction
+ ) => {
+ 
+};
+
