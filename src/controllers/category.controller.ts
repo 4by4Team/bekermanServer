@@ -1,21 +1,20 @@
 import { Request, Response, NextFunction } from 'express';
 import * as categoryService from '../services/category.service';
-import { categorySchema } from '../schemas/category.schema';
-import { category } from '../models/category.model';
+import { Category } from '../models/category.model';
 
-export const getAll = async (req: Request,res: Response,next: NextFunction): Promise<void> => {
+export const getAllCategories = async (req: Request,res: Response,next: NextFunction): Promise<void> => {
     try {
-      const items = await categoryService.getAll();
+      const items = await categoryService.getAllCategory();
       res.status(200).json(items);
     } catch (error) {
       next(error);
     }
   };
 
-export const getById = async (req: Request, res: Response, next: NextFunction): Promise<void>  => {
+export const getByIdCategory = async (req: Request, res: Response, next: NextFunction): Promise<void>  => {
   try {
     const id = parseInt(req.params.id);
-    const category = await categoryService.getById(id);
+    const category = await categoryService.getByIdCategory(id);
     if (!category) {
       res.status(404).json({ message: 'Category not found' });
       return;
@@ -26,11 +25,11 @@ export const getById = async (req: Request, res: Response, next: NextFunction): 
   }
 };
 
-export const create = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+export const createCategory = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
    
     try {
-        const newCategory:category = req.body;
-        const category = await categoryService.create(newCategory);
+        const newCategory:Category = req.body;
+        const category = await categoryService.createCategory(newCategory);
             res.status(201).json(category);
 
     } catch (error) {
@@ -42,20 +41,21 @@ export const create = async (req: Request, res: Response, next: NextFunction): P
     }
 }
 
-export const update = async (req: Request, res: Response, next: NextFunction) => {
+export const updateCategory = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const id = parseInt(req.params.id);
-    const category = await categoryService.update(id, req.body);
+    const category = await categoryService.updateCategory(id, req.body);
     res.json(category);
   } catch (err) {
     next(err);
   }
 };
 
-export const remove = async (req: Request, res: Response, next: NextFunction) => {
+export const deleteCategory = async (req: Request, res: Response, next: NextFunction) => {
   try {
+    
     const id = parseInt(req.params.id);
-    await categoryService.remove(id);
+    await categoryService.deleteCategory(id);
     res.status(204).send();
   } catch (err) {
     next(err);

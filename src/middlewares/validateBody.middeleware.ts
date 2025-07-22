@@ -7,7 +7,6 @@ export const validateBody = (schema: ZodSchema<any>) => (
   next: NextFunction
 ) => {
   const result = schema.safeParse(req.body);
-
   if (!result.success) {
     const flat = result.error.flatten();
 
