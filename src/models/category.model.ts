@@ -5,4 +5,5 @@ export interface Category {
   updatedBy?: string | null;
   createdAt: Date;
   updatedAt?: Date | null;
+  count: number; 
 }

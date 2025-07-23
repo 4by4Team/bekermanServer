@@ -53,6 +53,7 @@ model Category {
   createdBy      String
   updatedAt      DateTime?
   updatedBy      String?
+  count          Int      @default(0)
 }
 
 model Article {

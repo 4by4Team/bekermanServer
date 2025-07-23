@@ -1,8 +1,8 @@
 
 import { Request, Response, NextFunction } from "express";
 import * as articleService from "../services/article.service";
-import { Article } from "../models/article.model";
 
+import { Article } from "../models/article.model";
 export const getAllArticales = async (req: Request, res: Response) => {
   const articles = await articleService.getAllArticales();
   res.json(articles);
@@ -46,11 +46,15 @@ export const createArtical = async (
   res: Response,
   next: NextFunction
 ): Promise<void> => {
-
   try {
     const newArticle: Article = req.body;
-    console.log("newArticle- categories controllers", newArticle);
     const article = await articleService.createArtical(newArticle);
+
+    // נעדכן את הקטגוריה רק אם יש categoryId
+    if (article.categoryId) {
+      await categoryService.updateCategoryCount(article.categoryId, 1);
+    }
+
     res.status(201).json(article);
   } catch (error) {
     if (error instanceof Error) {
@@ -66,6 +70,7 @@ export const createArtical = async (
 };
 
 
+
 export const deleteArtical = async (
   req: Request,
   res: Response,
@@ -73,27 +78,45 @@ export const deleteArtical = async (
 ) => {
   try {
     const id = parseInt(req.params.id);
+    const article = await articleService.getArticleById(id);
+    if (!article) {
+     res.status(404).json({ message: "Article not found" });
+      return;
+    }
     await articleService.deleteArtical(id);
+    if (article.categoryId) {
+      await categoryService.updateCategoryCount(article.categoryId, -1);
+    }
+
     res.status(204).send();
   } catch (err) {
     next(err);
   }
 };
+
 export const updateArtical = async (req: Request, res: Response) => {
   try {
     const id = Number(req.params.id);
-
-    const article: Article | null = await articleService.updateArtical(id, req.body);
-
-    if (!article) {
-      res.status(404).json({ error: "Article not found" });
-      return;
+    const existingArticle = await articleService.getArticleById(id);
+    if (!existingArticle) {
+       res.status(404).json({ error: "Article not found" });
+        return;
+    }
+    const updatedArticle: Article | null = await articleService.updateArtical(id, req.body);
+    if (!updatedArticle) {
+       res.status(404).json({ error: "Article not found" });
+       return;
+    }
+    if (req.body.categoryId && req.body.categoryId !== existingArticle.categoryId) {
+      await categoryService.updateCategoryCount(existingArticle.categoryId, -1);
+      await categoryService.updateCategoryCount(req.body.categoryId, 1);
     }
 
-    res.json(article);
+    res.json(updatedArticle);
   } catch (error: any) {
     res.status(500).json({ error: error.message });
   }
 };
+
 
 
