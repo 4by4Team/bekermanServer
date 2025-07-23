@@ -37,8 +37,9 @@ export const updateCategoryCount = async (id: number, count: number) => {
   return prisma.category.update({
     where: { id },
     data: {
-      count,
+      count: { increment: count },
       updatedAt: new Date(),
     },
   });
-}
+};
+
