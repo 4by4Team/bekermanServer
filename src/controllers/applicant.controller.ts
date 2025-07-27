@@ -1,16 +1,32 @@
 import { Request, Response } from "express";
 import * as applicantService from "../services/applicant.service";
+import * as userService from "../services/user.service";
+import * as courseService from "../services/course.service";
 import { Applicant } from "../models/applicant.model";
 
 export const createApplicant = async (req: Request, res: Response) => {
   try {
     const newApplicant: Applicant = req.body;
+
+    const user = await userService.getUserById(newApplicant.userId);
+    if (!user) {
+       res.status(400).json({ error: 'User does not exist' });
+       return;
+    }
+
+    const course = await courseService.getCourseById(newApplicant.courseId);
+    if (!course) {
+      res.status(400).json({ error: 'Course does not exist' });
+      return;
+    }
+
     const applicantAdded = await applicantService.createApplicant(newApplicant);
     res.status(201).json(applicantAdded);
   } catch (error: any) {
     res.status(500).json({ error: error.message });
   }
 };
+
 
 export const getAllApplicants = async (req: Request, res: Response) => {
   try {
