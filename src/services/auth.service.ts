@@ -1,29 +1,42 @@
 import { prisma } from '../../prisma/client';
 import { User } from '../models/user.model';
 import bcrypt from 'bcrypt';
-
-// יצירת משתמש (Register)
-export const createUser = async (data: Omit<User, 'id' | 'createdAt' | 'updatedAt'| 'applicants'>) => {
+export const createUser = async (
+  data: Omit<User, 'id' | 'createdAt' | 'updatedAt' | 'applicants'>
+) => {
   const hashedPassword = await bcrypt.hash(data.password, 10);
 
-  return prisma.user.create({
+  const newUser = await prisma.user.create({
     data: {
       ...data,
       password: hashedPassword,
     },
+    select: {
+      id: true,
+      firstName: true,
+      lastName: true,
+      email: true,
+      phone: true,
+      tz: true,
+      role: true,
+      createdAt: true,
+      updatedAt: true,
+    },
   });
+
+  return newUser;
 };
 
-// התחברות משתמש (Login)
 export const loginUser = async (email: string, password: string) => {
   const user = await prisma.user.findUnique({ where: { email } });
   if (!user) throw new Error('Invalid credentials');
 
   const valid = await bcrypt.compare(password, user.password);
   if (!valid) throw new Error('Invalid credentials');
-
-  return user;
+  const { password: _, ...safeUser } = user;
+  return safeUser;
 };
+
 
 // שינוי סיסמה
 export const changePassword = async (id: number, currentPassword: string, newPassword: string) => {
