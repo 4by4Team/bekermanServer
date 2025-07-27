@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -13,70 +7,87 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Course {
-  id             Int      @id @default(autoincrement())
-  title          String
-  description    String
-  price          Float
-  linkToCourse   String
-  backgroundUrl  String
-  createdAt      DateTime 
-  createdBy      String
-  updatedAt      DateTime?
-  updatedBy      String?
-  students        Int    @default(0)
-  applicants      Applicant[]
-
+enum Role {
+  USER
+  ADMIN
+}
+model User{
+  id         Int      @id @default(autoincrement())
+  firstName  String
+  lastName   String
+  email      String   @unique
+  phone      String
+  tz         String
+  password   String
+  role       Role     @default(USER)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  applicants Applicant[]
+}
+model Applicant {
+  id         Int      @id @default(autoincrement())
+  userId     Int
+  courseId   Int
+  status     ApplicationStatus @default(PENDING)
+  appliedAt  DateTime @default(now())
+  updatedAt  DateTime          @updatedAt
+  user       User     @relation(fields: [userId], references: [id])
+  course     Course   @relation(fields: [courseId], references: [id])
 }
 
-model Applicant {
-  id                 Int       @id @default(autoincrement())
-  firstName          String
-  lastName           String
-  email              String    @unique
-  phone              String
-  age                String
-  medicalConditions  String?
-  goals              String
-  experience         String?
-  createdAt          DateTime  @default(now())
-  // קשר לקורס
-  courseId           Int
-  course             Course    @relation(fields: [courseId], references: [id])
+enum ApplicationStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+model Course {
+  id            Int        @id @default(autoincrement())
+  title         String
+  description   String
+  price         Float
+  linkToCourse  String
+  backgroundUrl String
+  students      Int        @default(0)
+  createdBy     String
+  updatedBy     String?
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
+  applicants    Applicant[]
 }
 
 model Category {
-  id             Int       @id @default(autoincrement())
-  categoryName   String
-  articles       Article[]
-  createdAt      DateTime
-  createdBy      String
-  updatedAt      DateTime?
-  updatedBy      String?
-  count          Int      @default(0)
+  id           Int       @id @default(autoincrement())
+  categoryName String
+  count        Int       @default(0)
+  createdBy    String
+  updatedBy    String?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  articles     Article[]
 }
 
 model Article {
-  id             Int       @id @default(autoincrement())
-  title          String
-  backgroundUrl  String
-  content        String
-  readTime       Int
-  categoryId     Int
-  category       Category  @relation(fields: [categoryId], references: [id])
-  createdAt      DateTime 
+  id            Int       @id @default(autoincrement())
+  title         String
+  backgroundUrl String
+  content       String
+  readTime      Int
+  categoryId    Int
+  category      Category  @relation(fields: [categoryId], references: [id])
   createdBy     String
-  updatedAt      DateTime?
-  updatedBy      String?
+  updatedBy     String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
 }
 
 model Testimony {
-  id             Int      @id @default(autoincrement())
-  title          String
-  summary  String
+  id         Int      @id @default(autoincrement())
+  title      String
+  summary    String
   youtubeId  String
-  createdAt      DateTime
-  createdBy      String
-  updatedAt      DateTime? 
-  updatedBy      String?
+  createdBy  String
+  updatedBy  String?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
 }

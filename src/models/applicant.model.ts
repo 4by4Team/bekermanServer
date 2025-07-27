@@ -1,14 +1,15 @@
+export enum Role {
+  ADMIN = 0,
+  USER = 1,
+}
 export interface Applicant {
   id: number;
   firstName: string;
   lastName: string;
   email: string;
   phone: string;
-  age: string;
-  medicalConditions?: string | null;
-  goals: string;
-  experience?: string | null;
+  password:string;
   createdAt: Date;
-  courseId: number;
-  // course?: Course;
+  updatedAt:Date;
+  role:Role;
 }

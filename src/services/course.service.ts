@@ -9,17 +9,19 @@ export const getCourseById = (id: number) => {
     return prisma.course.findUnique({ where: { id } });
 };
 
-export const createCourse = (data: Course) => {
-    const { applicants, ...courseData } = data;
+export const createCourse = (data: Omit < Course, 'id' | 'createdAt' | 'updatedAt'>) => {
     return prisma.course.create({ data: {
-      ...courseData,
-      createdAt: new Date(),
+      ...data,
     } });
 };
 
 export const updateCourse = (id: number, data: Partial<Course>) => {
-    const { id: _, applicants, ...updateData } = data;
-    return prisma.course.update({ where: { id }, data: updateData });
+    const { id, ...updateData } = data;
+    // Remove keys with value null (Prisma does not accept null for non-nullable fields)
+    const filteredData = Object.fromEntries(
+        Object.entries(updateData).filter(([_, v]) => v !== null)
+    );
+    return prisma.course.update({ where: { id }, data: filteredData });
 };
 
 export const deleteCourse = (id: number) => {
