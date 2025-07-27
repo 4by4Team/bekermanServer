@@ -1,7 +1,7 @@
 import { User } from '../models/user.model';
 import { prisma } from '../../prisma/client';
 
-// עדכון פרטי משתמש
+
 export const updateUser = (id: number, data: Partial<Omit<User, 'id' | 'createdAt' | 'updatedAt' | 'password'| 'applicants'>>) => {
   return prisma.user.update({
     where: { id },
@@ -9,11 +9,11 @@ export const updateUser = (id: number, data: Partial<Omit<User, 'id' | 'createdA
   });
 };
 
-// מחיקת משתמש
+
 export const deleteUser = (id: number) =>
   prisma.user.delete({ where: { id } });
 
-// קבלת כל המשתמשים (עם שדות נבחרים)
+
 export const getAllUsers = () => {
   return prisma.user.findMany({
     select: {
@@ -30,7 +30,7 @@ export const getAllUsers = () => {
   });
 };
 
-// קבלת משתמש לפי ID (עם שדות נבחרים)
+
 export const getUserById = (id: number) => {
   return prisma.user.findUnique({
     where: { id },

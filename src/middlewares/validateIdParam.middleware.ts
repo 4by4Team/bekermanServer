@@ -1,4 +1,4 @@
-// middlewares/validateId.middleware.ts
+
 import { Request, Response, NextFunction } from "express";
 
 export const validateIdParam = (req: Request, res: Response, next: NextFunction) => {

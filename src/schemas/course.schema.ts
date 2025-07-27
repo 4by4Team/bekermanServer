@@ -1,6 +1,5 @@
 import { z } from 'zod';
 
-// used for POST (create)
 export const createCourseSchema = z.object({
   title: z.string({
     required_error: "Title is required",
@@ -26,7 +25,6 @@ export const createCourseSchema = z.object({
   students: z.number().int().nonnegative().default(0),
 });
 
-// used for PUT (update)
 export const updateCourseSchema = z.object({
   title: z.string({
     required_error: "Title is required",

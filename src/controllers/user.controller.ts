@@ -1,7 +1,7 @@
 import * as userService from '../services/user.service';
 import { Request, Response } from 'express';
 
-// קבלת כל המשתמשים
+
 export const getAllUsers = async (_req: Request, res: Response) => {
   try {
     const users = await userService.getAllUsers();
@@ -11,7 +11,6 @@ export const getAllUsers = async (_req: Request, res: Response) => {
   }
 };
 
-// קבלת משתמש לפי ID
 export const getUserById = async (req: Request, res: Response) => {
   const id = Number(req.params.id);
     try {
@@ -26,7 +25,6 @@ export const getUserById = async (req: Request, res: Response) => {
     }
 };
 
-// עדכון משתמש
 export const updateUser = async (req: Request, res: Response) => {
   const id = Number(req.params.id);
 
@@ -37,8 +35,6 @@ export const updateUser = async (req: Request, res: Response) => {
     res.status(400).json({ message: error.message });
   }
 };
-
-// מחיקת משתמש
 export const deleteUser = async (req: Request, res: Response) => {
   const id = Number(req.params.id);
 

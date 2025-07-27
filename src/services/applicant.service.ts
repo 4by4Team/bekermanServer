@@ -1,7 +1,5 @@
 import { Applicant } from "../models/applicant.model";
 import { prisma } from "../../prisma/client";
-
-// יצירה של מועמד חדש
 export const createApplicant = (data: Omit<Applicant, "id" | "appliedAt" | "updatedAt" | "user" | "course">) => {
   return prisma.applicant.create({
     data: {
@@ -10,7 +8,7 @@ export const createApplicant = (data: Omit<Applicant, "id" | "appliedAt" | "upda
   });
 };
 
-// קבלת כל המועמדים
+
 export const getAllApplicants = () => prisma.applicant.findMany({
   include: {
     user: true,
@@ -18,7 +16,7 @@ export const getAllApplicants = () => prisma.applicant.findMany({
   },
 });
 
-// קבלת מועמד לפי מזהה
+
 export const getApplicantById = (id: number) => 
   prisma.applicant.findUnique({
     where: { id },
@@ -28,7 +26,6 @@ export const getApplicantById = (id: number) =>
     },
   });
 
-// עדכון מועמד
 export const updateApplicant = (id: number, data: Partial<Omit<Applicant, "id" | "appliedAt" | "updatedAt" | "user" | "course">>) => {
   return prisma.applicant.update({
     where: { id },
@@ -38,7 +35,7 @@ export const updateApplicant = (id: number, data: Partial<Omit<Applicant, "id" |
   });
 };
 
-// מחיקת מועמד
+
 export const deleteApplicant = (id: number) =>
   prisma.applicant.delete({
     where: { id },

@@ -11,7 +11,7 @@ import { createTestimonySchema, updateTestimonySchema } from '../schemas/testimo
 const app = express();
 app.use(bodyParser.json());
 
-// Helper function to create routes for testing
+
 function setupRoutes() {
     app.post('/articles', validateBody(createArticleSchema), (req, res) => {
         res.status(201).json({ ok: true });
@@ -81,9 +81,6 @@ describe('ValidateBody Middleware', () => {
             expect(res.body.error).toContain('Updater is required');
         });
     });
-
-    // בדיקות דומות לקטגוריה, קורס, עדות...
-
     describe('Category', () => {
         it('POST valid', async () => {
             const res = await request(app).post('/categories').send({

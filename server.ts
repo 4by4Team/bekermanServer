@@ -1,6 +1,6 @@
 import dotenv from 'dotenv'
 dotenv.config()
-import app from './src/index' // הקובץ שיצרת לאפליקציה אקספרס
+import app from './src/index' 
 import { PrismaClient } from '@prisma/client'
 const prisma = new PrismaClient()
 

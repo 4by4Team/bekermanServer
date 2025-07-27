@@ -50,8 +50,6 @@ export const createArtical = async (
   try {
     const newArticle: Article = req.body;
     const article = await articleService.createArtical(newArticle);
-
-    // נעדכן את הקטגוריה רק אם יש categoryId
     if (article.categoryId) {
       await categoryService.updateCategoryCount(article.categoryId, 1);
     }

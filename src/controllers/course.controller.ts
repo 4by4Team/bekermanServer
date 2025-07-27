@@ -6,7 +6,6 @@ export const createCourse = async (req: Request, res: Response) => {
   try {
     const newCourseData = {
       ...req.body,
-      //no need to take an if
       applicants: Array.isArray(req.body.applicants) ? req.body.applicants : [],
     };
     const courseAdded = await courseService.createCourse(newCourseData);

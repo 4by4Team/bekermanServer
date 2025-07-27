@@ -1,6 +1,5 @@
 import { z } from "zod";
 
-// Used for POST (create)
 export const createTestimonySchema = z.object({
   title: z.string({
     required_error: "Title is required",
@@ -16,7 +15,7 @@ export const createTestimonySchema = z.object({
   }).min(1, "Creator is required"),
 });
 
-// Used for PUT (update)
+
 export const updateTestimonySchema = z.object({
   title: z.string({
     required_error: "Title is required",

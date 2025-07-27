@@ -38,7 +38,7 @@ export const loginUser = async (email: string, password: string) => {
 };
 
 
-// שינוי סיסמה
+
 export const changePassword = async (id: number, currentPassword: string, newPassword: string) => {
   const user = await prisma.user.findUnique({ where: { id } });
   if (!user) throw new Error('User not found');

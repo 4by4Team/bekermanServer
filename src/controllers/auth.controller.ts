@@ -1,7 +1,7 @@
 import * as authService from '../services/auth.service';
 import { Request, Response } from 'express';
 
-// רישום משתמש
+
 export const register = async (req: Request, res: Response) => {
   try {
     const user = await authService.createUser(req.body);
@@ -11,7 +11,6 @@ export const register = async (req: Request, res: Response) => {
   }
 };
 
-// לוגין משתמש
 export const login = async (req: Request, res: Response) => {
   const { email, password } = req.body;
   try {
@@ -22,7 +21,7 @@ export const login = async (req: Request, res: Response) => {
   }
 };
 
-// שינוי סיסמה
+
 export const changePassword = async (req: Request, res: Response) => {
   const id = Number(req.params.id);
   const { currentPassword, newPassword } = req.body;
