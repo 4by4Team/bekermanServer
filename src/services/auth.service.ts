@@ -1,6 +1,25 @@
+import { makeTypedQueryFactory } from '@prisma/client/runtime/library';
 import { prisma } from '../../prisma/client';
 import { User } from '../models/user.model';
 import bcrypt from 'bcrypt';
+
+// utils/jwt.ts
+import jwt from 'jsonwebtoken';
+import { Prisma } from '@prisma/client';
+
+export const generateToken = (user: any) => {
+  return jwt.sign(
+    {
+      email: user.email,
+      role: user.role,
+    },
+    process.env.JWT_SECRET!,
+    {
+      expiresIn: '1d',
+    }
+  );
+};
+
 export const createUser = async (
   data: Omit<User, 'id' | 'createdAt' | 'updatedAt' | 'applicants'>
 ) => {
@@ -23,8 +42,8 @@ export const createUser = async (
       updatedAt: true,
     },
   });
-
-  return newUser;
+  const token = generateToken(newUser);
+  return {user:newUser,token};
 };
 
 export const loginUser = async (email: string, password: string) => {
@@ -34,7 +53,8 @@ export const loginUser = async (email: string, password: string) => {
   const valid = await bcrypt.compare(password, user.password);
   if (!valid) throw new Error('Invalid credentials');
   const { password: _, ...safeUser } = user;
-  return safeUser;
+  const token = generateToken(safeUser);
+  return {user:safeUser,token};
 };
 
 
