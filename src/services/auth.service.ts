@@ -1,5 +1,5 @@
-import { User } from '../models/user.model';
 import { prisma } from '../../prisma/client';
+import { User } from '../models/user.model';
 import bcrypt from 'bcrypt';
 
 // יצירת משתמש (Register)
