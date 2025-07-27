@@ -9,13 +9,16 @@ export const getCourseById = (id: number) => {
     return prisma.course.findUnique({ where: { id } });
 };
 
-export const createCourse = (data: Omit < Course, 'id' | 'createdAt' | 'updatedAt'>) => {
+export const createCourse = (data: Omit < Course, 'id' | 'updatedAt' | 'createdAt'|'applicants'>) => {
     return prisma.course.create({ data: {
       ...data,
+     applicants: {
+        create: [],  
+      },
     } });
 };
 
-export const updateCourse = (id: number, data: Partial<Course>) => {
+export const updateCourse = (id: number, data: Partial<Omit<Course, 'applicants'>>) => {
   return prisma.course.update({
     where: { id },
     data: {
@@ -23,6 +26,7 @@ export const updateCourse = (id: number, data: Partial<Course>) => {
     },
   });
 };
+
 
 export const deleteCourse = (id: number) => {
     return prisma.course.delete({ where: { id } });
