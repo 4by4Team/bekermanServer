@@ -10,16 +10,3 @@ export interface Article {
   createdAt: Date;
   updatedAt: Date;
 }
-
-  
-
-
-  // export interface Article {
-  //   id: number;
-  //   title: string;
-  //   excerpt: string;
-  //   createdBy: string;
-  //   readTime: string;
-  //   categoryId: number;
-  //   backgroundUrl: string;
-  // }
