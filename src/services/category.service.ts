@@ -15,7 +15,7 @@ export const createCategory = (data: Category) => {
   return prisma.category.create({
     data: {
       ...data,
-      createdAt: new Date()
+
       },
   });
 };
@@ -25,7 +25,6 @@ export const createCategory = (data: Category) => {
       where: { id },
       data: {
         ...data,
-        updatedAt: new Date(),
       },
     });
   };
@@ -38,7 +37,6 @@ export const updateCategoryCount = async (id: number, count: number) => {
     where: { id },
     data: {
       count: { increment: count },
-      updatedAt: new Date(),
     },
   });
 };

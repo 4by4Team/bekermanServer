@@ -10,6 +10,8 @@ import test from "node:test";
 import testimonyRoutes from "./routes/testimony.routes";
 import courseRoutes from './routes/course.routes';
 import cors from "cors";
+import authRoutes from "./routes/auth.routes";
+import userRouters from "./routes/user.routes";
 
 const app = express();
 app.use(cors());
@@ -24,6 +26,8 @@ app.use('/api/categories', categoryRoutes);
 app.use('/api/articles', articleRoutes);
 app.use("/api/testimonies",testimonyRoutes);
 app.use('/api/courses', courseRoutes);
+app.use('/api/auth', authRoutes);
+app.use('/api/user', userRouters);
 
 
 // Swagger
