@@ -1,6 +1,7 @@
 
 import { Request, Response, NextFunction } from "express";
 import * as articleService from "../services/article.service";
+import * as categoryService from "../services/category.service";
 
 import { Article } from "../models/article.model";
 export const getAllArticales = async (req: Request, res: Response) => {

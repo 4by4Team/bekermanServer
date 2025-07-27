@@ -6,6 +6,6 @@ export interface Testimony {
   createdBy: string;
   createdAt: Date;
   updatedBy?: string | null;
-  updatedAt?: Date | null;
+  updatedAt: Date;
 }
 

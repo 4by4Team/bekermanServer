@@ -1,14 +1,14 @@
+import { User } from './user.model';
+import { Course } from './course.model';
+import { ApplicationStatus } from './enums';
+
 export interface Applicant {
   id: number;
-  firstName: string;
-  lastName: string;
-  email: string;
-  phone: string;
-  age: string;
-  medicalConditions?: string | null;
-  goals: string;
-  experience?: string | null;
-  createdAt: Date;
+  userId: number;
   courseId: number;
-  // course?: Course;
+  status: ApplicationStatus;
+  appliedAt: Date;
+  updatedAt: Date;
+  user: User;
+  course: Course;
 }

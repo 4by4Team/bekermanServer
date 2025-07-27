@@ -16,11 +16,10 @@ export const getByCategory = (categoryId: number) => {
   return prisma.article.findMany({ where: { categoryId } });
 };
 
-export const createArtical = (data: Omit<Article, "createdAt">) => {
+export const createArtical = (data: Omit<Article, "createdAt"|"updatedAt"|"id">) => {
   return prisma.article.create({
     data: {
-      ...data,
-      createdAt: new Date(),
+      ...data, 
     },
   });
 };
@@ -30,7 +29,6 @@ export const updateArtical = (id: number, data: Partial<Article>) => {
     where: { id },
     data: {
       ...data,
-      updatedAt: new Date()
     }
   });
 };

@@ -9,7 +9,7 @@ export interface Course {
   backgroundUrl: string;
   createdAt: Date;
   createdBy: string;
-  updatedAt?: Date|null;
+  updatedAt: Date;
   updatedBy?: string|null;
   students: number;
   applicants?: Applicant[]|null;

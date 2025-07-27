@@ -4,8 +4,7 @@ import {prisma} from "../../prisma/client";
 export const createTestimony = (data: Omit<Testimony, "createdAt">) => {
   return prisma.testimony.create({
     data: {
-      ...data,
-      createdAt: new Date(),
+     ...data,     
     },
   });
 };
@@ -20,7 +19,6 @@ export const updateTestimony = (id: number, data: Partial<Testimony>) => {
     where: { id },
     data: {
       ...data,
-      updatedAt: new Date(),
     },
   });
 };
