@@ -1,28 +1,45 @@
-// import { prisma } from '../../prisma/client';
-// import { Applicant } from '../models/applicant.model';
+import { Applicant } from "../models/applicant.model";
+import { prisma } from "../../prisma/client";
 
-// export const getAllApplicants = () => {
-//   return prisma.applicant.findMany();
-// };
+// יצירה של מועמד חדש
+export const createApplicant = (data: Omit<Applicant, "id" | "appliedAt" | "updatedAt" | "user" | "course">) => {
+  return prisma.applicant.create({
+    data: {
+      ...data,
+    },
+  });
+};
 
-// export const getApplicantById = (id: number) => {
-//   return prisma.applicant.findUnique({ where: { id } });
-// };
+// קבלת כל המועמדים
+export const getAllApplicants = () => prisma.applicant.findMany({
+  include: {
+    user: true,
+    course: true,
+  },
+});
 
+// קבלת מועמד לפי מזהה
+export const getApplicantById = (id: number) => 
+  prisma.applicant.findUnique({
+    where: { id },
+    include: {
+      user: true,
+      course: true,
+    },
+  });
 
-// export const createApplicant = (data: Omit<Applicant, 'id' | 'createdAt' | 'updatedAt'>) => {
-//   return prisma.applicant.create({ data });}
+// עדכון מועמד
+export const updateApplicant = (id: number, data: Partial<Omit<Applicant, "id" | "appliedAt" | "updatedAt" | "user" | "course">>) => {
+  return prisma.applicant.update({
+    where: { id },
+    data: {
+      ...data,
+    },
+  });
+};
 
-// export const updateApplicant = (id: number, data: Partial<Applicant>) => {
-//   const { id: _, ...updateData } = data;
-//   return prisma.applicant.update({
-//     where: { id },
-//     data: updateData,
-//   });
-// };
-
-// export const deleteApplicant = (id: number) => {
-//   return prisma.applicant.delete({
-//     where: { id },
-//   });
-// };
+// מחיקת מועמד
+export const deleteApplicant = (id: number) =>
+  prisma.applicant.delete({
+    where: { id },
+  });
