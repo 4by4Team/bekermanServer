@@ -1,4 +1,5 @@
-import { Applicant, Role } from "./applicant.model";
+import { Applicant } from "./applicant.model";
+import { Role } from "./enums";
 
 export interface User {
   id: number;

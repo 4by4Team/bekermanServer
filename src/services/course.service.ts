@@ -16,12 +16,12 @@ export const createCourse = (data: Omit < Course, 'id' | 'createdAt' | 'updatedA
 };
 
 export const updateCourse = (id: number, data: Partial<Course>) => {
-    const { id, ...updateData } = data;
-    // Remove keys with value null (Prisma does not accept null for non-nullable fields)
-    const filteredData = Object.fromEntries(
-        Object.entries(updateData).filter(([_, v]) => v !== null)
-    );
-    return prisma.course.update({ where: { id }, data: filteredData });
+  return prisma.course.update({
+    where: { id },
+    data: {
+      ...data,
+    },
+  });
 };
 
 export const deleteCourse = (id: number) => {

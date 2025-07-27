@@ -1,15 +1,14 @@
-export enum Role {
-  ADMIN = 0,
-  USER = 1,
-}
+import { User } from './user.model';
+import { Course } from './course.model';
+import { ApplicationStatus } from './enums';
+
 export interface Applicant {
   id: number;
-  firstName: string;
-  lastName: string;
-  email: string;
-  phone: string;
-  password:string;
-  createdAt: Date;
-  updatedAt:Date;
-  role:Role;
+  userId: number;
+  courseId: number;
+  status: ApplicationStatus;
+  appliedAt: Date;
+  updatedAt: Date;
+  user: User;
+  course: Course;
 }
