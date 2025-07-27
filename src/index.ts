@@ -29,7 +29,7 @@ app.use("/api/testimonies",testimonyRoutes);
 app.use('/api/courses', courseRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/user', userRouters);
-app.use('api/applicants',applicantRoutes);
+app.use('/api/applicants',applicantRoutes);
 
 
 // Swagger
