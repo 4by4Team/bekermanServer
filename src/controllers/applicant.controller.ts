@@ -57,29 +57,42 @@ export const getByIdApplicant = async (req: Request, res: Response) => {
 
 export const updateApplicant = async (req: Request, res: Response) => {
     try {
-        const id = Number(req.params.id);
-        const updatedApplicant = await applicantService.updateApplicant(id, req.body);
-        if (!updatedApplicant) {
-            res.status(404).json({ error: "Applicant not found" });
-            return;
+        const { id } = req.params;
+        const updatedData: Applicant = req.body;
+
+
+        const existingApplicant = await applicantService.getApplicantById(Number(id));
+        if (!existingApplicant) {
+            return res.status(404).json({ error: 'Applicant not found' });
         }
-        res.json(updatedApplicant);
+        await _validateApplicant(updatedData);
+        // בדיקה אם הקורס השתנה
+        // if (existingApplicant.courseId !== updatedData.courseId) {
+        //   await courseService.updateCourseStudents(existingApplicant.courseId, -1); 
+        //   await courseService.updateCourseStudents(updatedData.courseId, 1);       
+        // }
+        const updatedApplicant = await applicantService.updateApplicant(Number(id), updatedData);
+       return res.status(200).json(updatedApplicant);
     } catch (error: any) {
-        res.status(500).json({ error: error.message });
+       return res.status(500).json({ error: error.message });  
     }
 };
 
+
 export const deleteApplicant = async (req: Request, res: Response) => {
     try {
-        const id = Number(req.params.id);
-        const existingApplicant = await applicantService.getApplicantById(id);
+        const { id } = req.params;
+        const existingApplicant = await applicantService.getApplicantById(Number(id));
         if (!existingApplicant) {
-            res.status(404).json({ error: "Applicant for remove not found" });
-            return;
+            return res.status(404).json({ error: 'Applicant not found' });
         }
-        await applicantService.deleteApplicant(id);
-        res.json({ message: "Applicant deleted" });
+        await applicantService.deleteApplicant(Number(id));
+        await courseService.updateCourseStudents(existingApplicant.courseId, -1);
+
+        return res.status(200).json({ message: 'Applicant deleted successfully' });
     } catch (error: any) {
-        res.status(500).json({ error: error.message });
+        return res.status(500).json({ error: error.message });
+
     }
 };
+
