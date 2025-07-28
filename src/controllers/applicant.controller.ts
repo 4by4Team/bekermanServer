@@ -59,11 +59,10 @@ export const updateApplicant = async (req: Request, res: Response) => {
     try {
         const { id } = req.params;
         const updatedData: Applicant = req.body;
-
-
         const existingApplicant = await applicantService.getApplicantById(Number(id));
         if (!existingApplicant) {
-            return res.status(404).json({ error: 'Applicant not found' });
+             res.status(404).json({ error: 'Applicant not found' });
+            return;
         }
         await _validateApplicant(updatedData);
         // בדיקה אם הקורס השתנה
@@ -72,9 +71,11 @@ export const updateApplicant = async (req: Request, res: Response) => {
         //   await courseService.updateCourseStudents(updatedData.courseId, 1);       
         // }
         const updatedApplicant = await applicantService.updateApplicant(Number(id), updatedData);
-       return res.status(200).json(updatedApplicant);
+        res.status(200).json(updatedApplicant);
+        return;
     } catch (error: any) {
-       return res.status(500).json({ error: error.message });  
+        res.status(500).json({ error: error.message });  
+        return;
     }
 };
 
@@ -84,14 +85,17 @@ export const deleteApplicant = async (req: Request, res: Response) => {
         const { id } = req.params;
         const existingApplicant = await applicantService.getApplicantById(Number(id));
         if (!existingApplicant) {
-            return res.status(404).json({ error: 'Applicant not found' });
+             res.status(404).json({ error: 'Applicant not found' });
+             return;
         }
         await applicantService.deleteApplicant(Number(id));
         await courseService.updateCourseStudents(existingApplicant.courseId, -1);
 
-        return res.status(200).json({ message: 'Applicant deleted successfully' });
+         res.status(200).json({ message: 'Applicant deleted successfully' });
+         return;
     } catch (error: any) {
-        return res.status(500).json({ error: error.message });
+         res.status(500).json({ error: error.message });
+         return;
 
     }
 };
