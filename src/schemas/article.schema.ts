@@ -27,9 +27,6 @@ export const updateArticleSchema = z.object({
     required_error: "Title is required",
     invalid_type_error: "Title must be a string",
   }).min(2, "Title is required"),
-  backgroundUrl: z.string({
-    required_error: "Background URL is required",
-  }).url("Must be a valid URL"),
   content: z.string({
     required_error: "Content is required",
   }).min(5, "Content is required"),
