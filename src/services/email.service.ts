@@ -29,3 +29,26 @@ export async function sendMail(to: string, subject: string, html: string): Promi
 
   console.log('מייל נשלח:', info.messageId);
 }
+export async function sendUserWelcomeEmail(user: { name: string; email: string }, courseName: string) {
+  const html = `
+    <h2>שלום ${user.name},</h2>
+    <p>נרשמת בהצלחה לקורס <strong>${courseName}</strong>!</p>
+    <p>בקרוב תקבל גישה לקורס במערכת.</p>
+  `;
+
+  await sendMail(user.email, `נרשמת לקורס ${courseName}`, html);
+}
+const ADMIN_EMAIL= process.env.ADMIN_EMAIL || 'sh0556745370@gmail.com'    
+export async function notifyAdminUserRegistered(user: { name: string; email: string }, courseName: string) {
+  const html = `
+    <p>יוזר חדש נרשם לקורס:</p>
+    <ul>
+      <li>שם: ${user.name}</li>
+      <li>אימייל: ${user.email}</li>
+      <li>קורס: ${courseName}</li>
+    </ul>
+    <p>יש להעניק לו גישה לקורס.</p>
+  `;
+
+  await sendMail(ADMIN_EMAIL, `משתמש חדש נרשם לקורס ${courseName}`, html);
+}

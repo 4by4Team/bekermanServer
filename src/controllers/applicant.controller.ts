@@ -3,6 +3,7 @@ import * as applicantService from "../services/applicant.service";
 import * as userService from "../services/user.service";
 import * as courseService from "../services/course.service";
 import { Applicant } from "../models/applicant.model";
+import { notifyAdminUserRegistered, sendUserWelcomeEmail } from "../services/email.service";
 
 const _validateApplicant = async (applicant: Applicant) => {
     const user = await userService.getUserById(applicant.userId);
@@ -19,9 +20,15 @@ const _validateApplicant = async (applicant: Applicant) => {
 export const createApplicant = async (req: Request, res: Response) => {
     try {
         const newApplicant: Applicant = req.body;
-        await _validateApplicant(newApplicant);
+        const { course, user } = await _validateApplicant(newApplicant);
         await courseService.updateCourseStudents(newApplicant.courseId, 1);
         const applicantAdded = await applicantService.createApplicant(newApplicant);
+        await sendUserWelcomeEmail({ name: user.firstName, email: user.email }, course.title).catch((error) => {
+            console.error("Failed to send welcome email:", error);
+        });
+        await notifyAdminUserRegistered({ name: user.firstName, email: user.email }, course.title).catch((error) => {
+            console.error("Failed to notify admin:", error);
+        });
         res.status(201).json(applicantAdded);
     } catch (error: any) {
         if (error instanceof Error) {
