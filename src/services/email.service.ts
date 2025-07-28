@@ -38,7 +38,7 @@ export async function sendUserWelcomeEmail(user: { name: string; email: string }
 
   await sendMail(user.email, `נרשמת לקורס ${courseName}`, html);
 }
-const ADMIN_EMAIL= process.env.ADMIN_EMAIL || 'sh0556745370@gmail.com'    
+const ADMIN_EMAIL= process.env.ADMIN_EMAIL || 'bandmapplication@gmail.com';    
 export async function notifyAdminUserRegistered(user: { name: string; email: string }, courseName: string) {
   const html = `
     <p>יוזר חדש נרשם לקורס:</p>

@@ -49,6 +49,11 @@ export const createArtical = async (
 ): Promise<void> => {
   try {
     const newArticle: Article = req.body;
+    const category = await categoryService.getByIdCategory(newArticle.categoryId);
+    if (!category) {
+      res.status(404).json({ message: "Category not found" });
+      return;
+    }
     const article = await articleService.createArtical(newArticle);
     if (article.categoryId) {
       await categoryService.updateCategoryCount(article.categoryId, 1);
