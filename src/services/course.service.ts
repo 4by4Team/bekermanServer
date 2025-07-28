@@ -31,3 +31,12 @@ export const updateCourse = (id: number, data: Partial<Omit<Course, 'applicants'
 export const deleteCourse = (id: number) => {
     return prisma.course.delete({ where: { id } });
 };
+
+export const updateCourseStudents = async (id: number, student: number) => {
+  return prisma.course.update({
+    where: { id },
+    data: {
+      students: { increment: student },
+    },
+  });
+};
