@@ -38,9 +38,6 @@ export const updateCourseSchema = z.object({
   linkToCourse: z.string({
     required_error: "Link to course is required",
   }).url("Must be a valid URL"),
-  backgroundUrl: z.string({
-    required_error: "Background URL is required",
-  }).url("Must be a valid URL"),
   updatedBy: z.string({
     required_error: "Updater is required",
   }).min(1, "Updater is required"),
