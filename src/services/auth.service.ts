@@ -5,8 +5,6 @@ import bcrypt from 'bcrypt';
 
 // utils/jwt.ts
 import jwt from 'jsonwebtoken';
-import { Prisma } from '@prisma/client';
-
 export const generateToken = (user: any) => {
   return jwt.sign(
     {
