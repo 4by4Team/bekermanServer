@@ -47,7 +47,7 @@ model Course {
   description   String
   price         Float
   linkToCourse  String
-  backgroundUrl String?
+  backgroundUrl String
   students      Int        @default(0)
   createdBy     String
   updatedBy     String?
@@ -70,7 +70,7 @@ model Category {
 model Article {
   id            Int       @id @default(autoincrement())
   title         String
-  backgroundUrl String?
+  backgroundUrl String
   content       String
   readTime      Int
   categoryId    Int

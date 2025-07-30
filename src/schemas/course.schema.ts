@@ -32,6 +32,9 @@ export const updateCourseSchema = z.object({
   description: z.string({
     required_error: "Description is required",
   }).min(5, "Description is required"),
+    backgroundUrl: z.string({
+    required_error: "Background URL is required",
+  }).url("Must be a valid URL"),
   price: z.number({
     required_error: "Price is required",
   }).nonnegative("Price must be positive"),
