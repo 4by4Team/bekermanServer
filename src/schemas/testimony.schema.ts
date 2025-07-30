@@ -9,7 +9,7 @@ export const createTestimonySchema = z.object({
   }).min(1, "Summary is required"),
   youtubeId: z.string({
     required_error: "YouTube ID is required",
-  }).url("Must be a valid URL"),
+  }).min(1, "YouTube ID is required"),
   createdBy: z.string({
     required_error: "Creator is required",
   }).min(1, "Creator is required"),
