@@ -6,7 +6,7 @@ export interface Course {
   description: string;
   price: number;
   linkToCourse: string;
-  backgroundUrl?: string;
+  backgroundUrl: string;
   createdAt: Date;
   createdBy: string;
   updatedAt: Date;
