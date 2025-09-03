@@ -3,7 +3,7 @@ export interface Testimony {
   title: string;
   summary: string;
   youtubeId: string;
-  createdBy: string;
+  createdBy: string |null;
   createdAt: Date;
   updatedBy?: string | null;
   updatedAt: Date;
