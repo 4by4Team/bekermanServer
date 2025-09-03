@@ -86,7 +86,7 @@ model Testimony {
   title      String
   summary    String
   youtubeId  String
-  createdBy  String
+  createdBy  String?
   updatedBy  String?
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
