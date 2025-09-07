@@ -33,3 +33,21 @@ export const changePassword = async (req: Request, res: Response) => {
     res.status(400).json({ message: error.message });
   }
 };
+
+export const googleAuthCallback = async (req: Request, res: Response) => {
+  console.log('Google auth callback triggered');
+  try {
+    if (!req.user) {
+      return res.status(401).json({ message: 'Authentication failed' });
+    }
+
+    const token = authService.generateToken(req.user);
+
+    // Redirect to frontend with token
+    
+    
+    res.redirect(`${process.env.CLIENT_URL}/auth/google/callback?token=${token}`);
+  } catch (error) {
+    res.status(500).json({ message: 'Server error during Google authentication' });
+  }
+};
