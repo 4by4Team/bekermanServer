@@ -3,7 +3,7 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-const PAYPAL_API_URL = process.env.PAYPAL_API || "https://api-m.sandbox.paypal.com"; // Use sandbox for testing
+const PAYPAL_API_URL = process.env.PAYPAL_API || "https://api-m.sandbox.paypal.com";
 const CLIENT_ID = process.env.PAYPAL_CLIENT_ID!;
 const CLIENT_SECRET = process.env.PAYPAL_CLIENT_SECRET!;
 
@@ -26,10 +26,8 @@ async function generateAccessToken(): Promise<string> {
 }
 
 // שירות להפקת הזמנה
-export async function createOrder(): Promise<any> {
+export async function createOrder(amount: string): Promise<any> {
     try {
-        console.log(CLIENT_ID, CLIENT_SECRET);
-        
         const accessToken = await generateAccessToken();
         const response = await axios.post(
             `${PAYPAL_API_URL}/v2/checkout/orders`,
@@ -39,7 +37,7 @@ export async function createOrder(): Promise<any> {
                     {
                         amount: {
                             currency_code: "USD",
-                            value: "10.00", // סכום התשלום
+                            value: amount,
                         },
                     },
                 ],
@@ -53,12 +51,29 @@ export async function createOrder(): Promise<any> {
         return response.data;
     } catch (error: any) {
         console.error("PayPal error:", error?.response?.data || error.message);
-        throw new Error("Error creating order with PayPal");
+        throw new Error(`PayPal error: ${error?.response?.data || error.message}`);
 
     }
 }
 
 // שירות לאישור תשלום
+// export async function captureOrder(orderID: string): Promise<any> {
+//     try {
+//         const accessToken = await generateAccessToken();
+//         const response = await axios.post(
+//             `${PAYPAL_API_URL}/v2/checkout/orders/${orderID}/capture`,
+//             {},
+//             {
+//                 headers: {
+//                     Authorization: `Bearer ${accessToken}`,
+//                 },
+//             }
+//         );
+//         return response.data;
+//     } catch (error) {
+//         throw new Error("Error capturing order with PayPal");
+//     }
+// }
 export async function captureOrder(orderID: string): Promise<any> {
     try {
         const accessToken = await generateAccessToken();
@@ -71,8 +86,21 @@ export async function captureOrder(orderID: string): Promise<any> {
                 },
             }
         );
-        return response.data;
-    } catch (error) {
-        throw new Error("Error capturing order with PayPal");
+
+        // הפקת מידע חשוב ללקוח
+        const captureData = response.data;
+        const status = captureData.status; // לדוגמה: 'COMPLETED'
+        const payer = captureData.payer; // כולל payer_id, email, name וכו'
+
+        return {
+            status,
+            payer,
+            details: captureData.purchase_units, // מידע נוסף על ההזמנה
+        };
+    } catch (error: any) {
+        // החזרת השגיאה המלאה מה-API במקום הודעה כללית
+        const errData = error?.response?.data || error.message;
+        console.error("PayPal capture error:", errData);
+        throw new Error(`Error capturing order with PayPal: ${JSON.stringify(errData)}`);
     }
 }

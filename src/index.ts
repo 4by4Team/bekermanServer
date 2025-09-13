@@ -30,7 +30,7 @@ app.use('/api/courses', courseRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/user', userRouters);
 app.use('/api/applicants',applicantRoutes);
-app.use("/api/paypal", paypalRoutes);
+app.use('/api/paypal', paypalRoutes);
 
 // Swagger
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
