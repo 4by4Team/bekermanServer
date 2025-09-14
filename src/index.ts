@@ -6,13 +6,13 @@ import articleRoutes from "./routes/article.routes";
 import { errorHandler } from "./middlewares/errorHandler";
 import swaggerJSDoc from "swagger-jsdoc";
 import swaggerOptions from "./config/swaggerOptions";
-import test from "node:test";
 import testimonyRoutes from "./routes/testimony.routes";
 import courseRoutes from './routes/course.routes';
 import cors from "cors";
 import authRoutes from "./routes/auth.routes";
 import userRouters from "./routes/user.routes";
 import applicantRoutes from "./routes/applicant.routes";
+import paypalRoutes from "./routes/payment.routes";
 
 const app = express();
 app.use(cors());
@@ -30,7 +30,7 @@ app.use('/api/courses', courseRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/user', userRouters);
 app.use('/api/applicants',applicantRoutes);
-
+app.use('/api/paypal', paypalRoutes);
 
 // Swagger
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
