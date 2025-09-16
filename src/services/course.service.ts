@@ -12,7 +12,8 @@ export const getCourseById = (id: number) => {
 export const createCourse = (data: Omit < Course, 'id' | 'updatedAt' | 'createdAt'|'applicants'>) => {
     return prisma.course.create({ data: {
       ...data,
-     applicants: {
+      backgroundUrl: data.backgroundUrl ?? '', 
+      applicants: {
         create: [],  
       },
     } });
