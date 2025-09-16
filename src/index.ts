@@ -14,12 +14,32 @@ import authRoutes from "./routes/auth.routes";
 import userRouters from "./routes/user.routes";
 import applicantRoutes from "./routes/applicant.routes";
 
+import session from "express-session";
+import passport from "./config/passport";
+
 const app = express();
 app.use(cors());
+
 
 const swaggerSpec = swaggerJSDoc(swaggerOptions);
 
 app.use(express.json());
+
+
+// --- Session middleware (must come before passport) ---
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET || "supersecret",
+    resave: false,
+    saveUninitialized: false,
+    cookie: { secure: false }, // set secure: true in production w/ HTTPS
+  })
+);
+
+// --- Passport middleware ---
+app.use(passport.initialize());
+app.use(passport.session());
+
 
 //routes
 

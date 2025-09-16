@@ -1,6 +1,7 @@
+import { log } from 'console';
 import * as authService from '../services/auth.service';
 import { Request, Response } from 'express';
-
+import { User } from '../models/user.model';
 
 export const register = async (req: Request, res: Response) => {
   try {
@@ -21,7 +22,6 @@ export const login = async (req: Request, res: Response) => {
   }
 };
 
-
 export const changePassword = async (req: Request, res: Response) => {
   const id = Number(req.params.id);
   const { currentPassword, newPassword } = req.body;
@@ -35,19 +35,46 @@ export const changePassword = async (req: Request, res: Response) => {
 };
 
 export const googleAuthCallback = async (req: Request, res: Response) => {
-  console.log('Google auth callback triggered');
   try {
     if (!req.user) {
-      return res.status(401).json({ message: 'Authentication failed' });
+      res.status(401).json({ message: 'Google authentication failed' });
+      return;
     }
+    const user = req.user as User;
+    const token = authService.generateToken(user);
 
-    const token = authService.generateToken(req.user);
+    const clientUrl = process.env.CLIENT_URL || '*';
+    const safeUser = {
+      id: user.id,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      email: user.email,
+      phone: user.phone,
+      tz: user.tz,
+      role: user.role,
+    };
 
-    // Redirect to frontend with token
-    
-    
-    res.redirect(`${process.env.CLIENT_URL}/auth/google/callback?token=${token}`);
-  } catch (error) {
-    res.status(500).json({ message: 'Server error during Google authentication' });
+    res.send(`
+      <html>
+        <body>
+          <script>
+            (function() {
+              window.opener.postMessage(
+                {
+                  token: ${JSON.stringify(token)},
+                  user: ${JSON.stringify(safeUser)}
+                },
+                ${JSON.stringify(clientUrl)}
+              );
+              window.close();
+            })();
+          </script>
+        </body>
+      </html>
+    `);
+    return;
+  } catch (error: any) {
+    res.status(500).json({ message: error.message || 'Server error' });
+    return;
   }
 };

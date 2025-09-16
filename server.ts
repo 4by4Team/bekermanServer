@@ -1,6 +1,5 @@
 import dotenv from 'dotenv'
 dotenv.config()
-import express from 'express';
 import app from './src/index'
 import { PrismaClient } from '@prisma/client'
 import passport from './src/config/passport';
@@ -14,7 +13,7 @@ async function startServer() {
     await prisma.$connect()
     console.log('✅ Database connected')
 
-    app.use(passport.initialize());
+    // app.use(passport.initialize());
 
     app.listen(PORT, () => {
       console.log(`🚀 Server is running at http://localhost:${PORT}`)
